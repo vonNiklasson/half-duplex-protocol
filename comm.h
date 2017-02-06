@@ -8,10 +8,6 @@
 #ifndef COMM_H_INCLUDED
 #define COMM_H_INCLUDED
 
-int * convert_bits_to_array(char* data_bits);
-int * convert_digits_to_array(char* data_digits);
-int * convert_chars_to_array(char* data_chars);
-
 int initialize_send_obj(
     int* bits,
     char* frequency,
