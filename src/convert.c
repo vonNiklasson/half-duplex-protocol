@@ -6,7 +6,6 @@
  */
 
 #include <string.h>
-#include <stdlib.h>
 
 #include "functions.h"
 #include "global.h"
