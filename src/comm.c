@@ -12,7 +12,7 @@
 // Compiles data to a SendObject
 SendObject get_send_object(
     unsigned char binary,
-    float frequency)
+    int frequency)
 {
     SendObject sendObject;
 

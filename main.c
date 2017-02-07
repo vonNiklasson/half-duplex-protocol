@@ -13,17 +13,13 @@
 
 int main(int argc, char *argv[])
 {    
-    char* action;
+    char* action = "s";
 
-    char* data_bits;
-    char* data_digits;
-    char* data_chars;
+    char* binary; // The binary data that will be sent
 
     int frequency   = DEFAULT_TRANSMIT_FREQUENCY;
     int debug       = DEFAULT_DEBUG;
     int half_duplex = DEFAULT_EXPECT_HALF_DUPLEX;
-
-    char* binary; // The binary data that will be sent
 
     /* Gets type of action (send or listen/recieve) */
     if (arg_exists(argv, argc, "-a=")) {
@@ -32,19 +28,19 @@ int main(int argc, char *argv[])
 
     /* Gets the data in bits that will be sent */
     if (arg_exists(argv, argc, "-b=")) {
-        data_bits = get_arg_value(argv, argc, "-b=");
-        binary = convert_bits_to_binary(data_bits);
+        char* data = get_arg_value(argv, argc, "-b=");
+        binary = convert_bits_to_binary(data);
     }
 
     /* Gets the data in digits that will be sent */
     if (arg_exists(argv, argc, "-d=")) {
-        data_digits = get_arg_value(argv, argc, "-d=");
+        char* data = get_arg_value(argv, argc, "-d=");
         //binary = 
     }
 
     /* Gets the data in chars that will be sent */
     if (arg_exists(argv, argc, "-c=")) {
-        data_chars = get_arg_value(argv, argc, "-c=");
+        char* data = get_arg_value(argv, argc, "-c=");
         //binary = 
     }
 

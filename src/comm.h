@@ -16,20 +16,21 @@ typedef struct {
     /* Wether to expect feedback from the reciever */
     int half_duplex;
     /* The frequency of bits per second */
-    float frequency;
+    int frequency;
 } SendObject;
 
-typedef struct {   
+typedef struct {
     unsigned char binary_handshake[DATA_HANDSHAKE_BITS_RESERVED];
     /* Doubled values because 0 will be sent as 01 and 1 will be sent as 10 */
     unsigned char binary_data[DATA_BYTES_RESERVED * 2];
-    unsigned char binary_data_byte_count[DATA_BYTES_COUNT_RESERVED * 2];
     unsigned char binary_settings[DATA_SETTINGS_BYTES_RESERVED * 2];
-    float frequency;
+    // Using int since 
+    int binary_data_byte_count[DATA_BYTES_COUNT_RESERVED * 2];
+    int frequency;
 } ComputedSendObject;
 
 SendObject get_send_object(
     unsigned char binary,
-    float frequency);
+    int frequency);
 
 #endif
