@@ -8,6 +8,6 @@
 #ifndef CONVERT_H_INCLUDED
 #define CONVERT_H_INCLUDED
 
-unsigned char* convert_bits_to_binary(char* data_bits);
+unsigned char* convert_bits_to_binary(char* data_bits, int* binary_length);
 
 #endif

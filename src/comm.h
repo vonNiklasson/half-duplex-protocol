@@ -12,11 +12,15 @@
 
 typedef struct {
     /* The data that will be sent */
-    unsigned char binary[DATA_BYTES_RESERVED];
-    /* Wether to expect feedback from the reciever */
-    int half_duplex;
+    unsigned char binary_data[DATA_BYTES_RESERVED];
+    // Number of bytes that are used
+    int binary_data_byte_count;
     /* The frequency of bits per second */
     int frequency;
+    /* Wether to expect feedback from the reciever */
+    int half_duplex;
+    /* If the program shall print debug messages */
+    int debug;
 } SendObject;
 
 typedef struct {
@@ -29,8 +33,11 @@ typedef struct {
     int frequency;
 } ComputedSendObject;
 
-SendObject get_send_object(
-    unsigned char binary,
-    int frequency);
+SendObject compile_send_object(
+    unsigned char* binary_data,
+    int byte_count,
+    int frequency,
+    int half_duplex,
+    int debug);
 
 #endif

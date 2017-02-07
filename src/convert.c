@@ -12,10 +12,10 @@
 
 /* Converting data into binary */
 
-unsigned char* convert_bits_to_binary(char* data_bits) {
+unsigned char* convert_bits_to_binary(char* data_bits, int* binary_length) {
     // Number of characters that will be used
     int req_char_count = divide_round_up(strlen(data_bits), 8);
-    static unsigned char r[DATA_BYTES_RESERVED];
+    static unsigned char binary[DATA_BYTES_RESERVED];
 
     int i;               // Keeps track of outer loop
     int j;               // Keeps track of inner loop
@@ -24,7 +24,7 @@ unsigned char* convert_bits_to_binary(char* data_bits) {
 
     // Loops through the required characters
     for (i = 0; i < req_char_count; i++) {
-        r[i] = 0;
+        binary[i] = 0;
         // Loops through the bits in each character in arg data_bits
         for (j = 7; j >= 0; j--) {
 
@@ -38,11 +38,12 @@ unsigned char* convert_bits_to_binary(char* data_bits) {
                 bit_counter++;
             }
             // Starts at the highest bit position and work down to 0
-            // and writes the value to r
-            r[i] = r[i] | val << j;
+            // and writes the value to binary
+            binary[i] = binary[i] | val << j;
         }
     }
 
+    *binary_length = req_char_count;
     // Returns the binary data
-    return r;
+    return binary;
 }

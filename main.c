@@ -5,18 +5,24 @@
  * Source: main.c
  */
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "src/comm.h"
 #include "src/convert.h"
 #include "src/functions.h"
-#include "platform/include.h"
 
 int main(int argc, char *argv[])
 {    
-    char* action = "s"; // Default action is to send
+    /* Default action is to send */
+    char* action = "s";
 
-    char* binary; // The binary data that will be sent
+    /* The binary data that will be sent */
+    unsigned char* binary; 
+
+    /* The length of the char array after binary assignment */
+    int binary_byte_count = 0;
+
 
     int frequency   = DEFAULT_TRANSMIT_FREQUENCY;
     int debug       = DEFAULT_DEBUG;
@@ -30,7 +36,7 @@ int main(int argc, char *argv[])
     /* Gets the data in bits that will be sent */
     if (arg_exists(argv, argc, "-b=")) {
         char* data = get_arg_value(argv, argc, "-b=");
-        binary = convert_bits_to_binary(data);
+        binary = convert_bits_to_binary(data, &binary_byte_count);
     }
 
     /* Gets the data in digits that will be sent */
@@ -51,10 +57,10 @@ int main(int argc, char *argv[])
         frequency = atoi(_frequency);
     }
 
-    /* If the program protocol will print a debug log during transmission */
+    /* If the program will used half duplex */
     if (arg_exists(argv, argc, "-hd=")) {
-        char* hd = get_arg_value(argv, argc, "-hd=");
-        frequency = atoi(hd);
+        char* _half_duplex = get_arg_value(argv, argc, "-hd=");
+        half_duplex = atoi(_half_duplex);
     }
 
     /* If the program protocol will print a debug log during transmission */
@@ -65,6 +71,12 @@ int main(int argc, char *argv[])
 
     /* Validate data here */
 
-    //SendObject so = get_send_object(binary, frequency);
+    /* Compile the data into a struct object */
+    SendObject sendObject = compile_send_object(
+        binary,
+        binary_byte_count,
+        frequency,
+        half_duplex,
+        debug);
 
 }
