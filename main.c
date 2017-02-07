@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "src/comm.h"
 #include "src/convert.h"
 #include "src/functions.h"
@@ -13,12 +14,13 @@
 int main(int argc, char *argv[])
 {    
     char* action;
+
     char* data_bits;
     char* data_digits;
     char* data_chars;
-    char* frequency;
-    char* packet_low_src;
-    char* packet_high_src;
+
+    int frequency = DEFAULT_TRANSMIT_FREQUENCY;
+    int debug = DEFAULT_DEBUG;
 
     char* binary; // The binary data that will be sent
 
@@ -44,10 +46,16 @@ int main(int argc, char *argv[])
         data_chars = get_arg_value(argv, argc, "-c=");
         //binary = 
     }
-    
+
     /* Gets the prefered frequency of bits per second */
     if (arg_exists(argv, argc, "-f=")) {
-        frequency = get_arg_value(argv, argc, "-f=");
+        char* f = get_arg_value(argv, argc, "-f=");
+        frequency = atoi(f);
     }
 
+    /* Gets the prefered debug of bits per second */
+    if (arg_exists(argv, argc, "-l=")) {
+        char* l = get_arg_value(argv, argc, "-l=");
+        debug = atoi(l);
+    }
 }
