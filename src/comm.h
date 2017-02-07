@@ -30,7 +30,13 @@ typedef struct {
     unsigned char binary_settings[DATA_SETTINGS_BYTES_RESERVED * 2];
     // Using int since 
     int binary_data_byte_count[DATA_BYTES_COUNT_RESERVED * 2];
+
+    /* The frequency of bits per second */
     int frequency;
+    /* Wether to expect feedback from the reciever */
+    int half_duplex;
+    /* If the program shall print debug messages */
+    int debug;
 } ComputedSendObject;
 
 SendObject compile_send_object(

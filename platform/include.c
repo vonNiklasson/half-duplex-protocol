@@ -4,6 +4,3 @@
  *
  * Source: platform/include.c
  */
-
-#include "gpio.c"
-#include "delay.c"

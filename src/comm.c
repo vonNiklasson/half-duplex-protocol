@@ -35,14 +35,13 @@ SendObject compile_send_object(
     return sendObject;
 }
 
-/* Converts a SendObject to a ComputedSendObject
+/* Converts a SendObject to a ComputedSendObject */
 ComputedSendObject compile_computed_send_object(
-    SendObject send_obj)
+    SendObject send_object)
 {
     ComputedSendObject cso;
 
-    cso.frequency = send_obj.frequency;
+    cso.frequency = send_object.frequency;
 
     return cso;
 }
-*/
