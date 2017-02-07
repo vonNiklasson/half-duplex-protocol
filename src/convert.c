@@ -13,7 +13,7 @@
 /* Converting data into binary */
 
 unsigned char* convert_bits_to_binary(char* data_bits) {
-    // Number of characters that will be allocated
+    // Number of characters that will be used
     int req_char_count = divide_round_up(strlen(data_bits), 8);
     static unsigned char r[DATA_BYTES_RESERVED];
 
@@ -29,9 +29,9 @@ unsigned char* convert_bits_to_binary(char* data_bits) {
         for (j = 7; j >= 0; j--) {
 
             val = 0; // Sets default value to 0
-            // Gets the data value
+            // Make sure we don't try to access data outside the input data
             if (bit_counter < strlen(data_bits)) {
-                // Try to see if the value is 1
+                // Check if the value is 1, will otherwise default to 0
                 if (data_bits[bit_counter] == 0x31) {
                     val = 1;
                 }

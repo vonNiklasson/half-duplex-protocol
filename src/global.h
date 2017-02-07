@@ -10,7 +10,7 @@
 /* Version of the protocol */
 #define PROTOCOL_VERSION "0.1"
 
-/* Number of bytes that can me transmitted */
+/* Number of bytes that can be transmitted of the actual binary data */
 #define DATA_BYTES_RESERVED 32
 /* Number of bytes reserved for settings data */
 #define DATA_SETTINGS_BYTES_RESERVED 2
