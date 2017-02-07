@@ -49,14 +49,5 @@ int main(int argc, char *argv[])
     if (arg_exists(argv, argc, "-f=")) {
         frequency = get_arg_value(argv, argc, "-f=");
     }
-    
-    /* Get the location of the file that triggers a low value on packets */
-    if (arg_exists(argv, argc, "-pl=")) {
-        packet_low_src = get_arg_value(argv, argc, "-pl=");
-    }
-    
-    /* Get the location of the file that triggers a high value on packets */
-    if (arg_exists(argv, argc, "-ph=")) {
-        packet_high_src = get_arg_value(argv, argc, "-ph=");
-    }
+
 }

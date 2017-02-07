@@ -12,9 +12,7 @@
 
 struct SendObject get_send_object(
     unsigned char binary,
-    float frequency,
-    char* packet_low_src,
-    char* packet_high_src);
+    float frequency);
 
 struct SendObject
 {
@@ -24,9 +22,6 @@ struct SendObject
     int half_duplex;
     /* The frequency of bits per second */
     float frequency;
-    /* Location of the files that trigger a high and low value on packets */
-    char *packet_low_src;
-    char *packet_high_src;
 };
 
 struct StructuredSendObject
@@ -36,8 +31,6 @@ struct StructuredSendObject
     unsigned char settings[SETTINGS_BYTES_RESERVED * 2];
     unsigned char byte_count[PACKET_NUMBER_BYTES_RESERVED * 2];
     float frequency;
-    char *packet_low_src;
-    char *packet_high_src;
 };
 
 #endif

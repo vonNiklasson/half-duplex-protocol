@@ -12,9 +12,7 @@
 // Compiles data to a SendObject
 struct SendObject get_send_object(
     unsigned char binary,
-    float frequency,
-    char* packet_low_src,
-    char* packet_high_src)
+    float frequency)
 {
     struct SendObject sendObject;
 }
@@ -25,8 +23,6 @@ struct StructuredSendObject get_structured_send_object(
 {
     struct StructuredSendObject sso;
 
-    sso.packet_low_src = send_obj.packet_low_src;
-    sso.packet_high_src = send_obj.packet_high_src;
     sso.frequency = send_obj.frequency;
 
     return sso;
