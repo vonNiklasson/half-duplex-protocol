@@ -19,8 +19,9 @@ int main(int argc, char *argv[])
     char* data_digits;
     char* data_chars;
 
-    int frequency = DEFAULT_TRANSMIT_FREQUENCY;
-    int debug = DEFAULT_DEBUG;
+    int frequency   = DEFAULT_TRANSMIT_FREQUENCY;
+    int debug       = DEFAULT_DEBUG;
+    int half_duplex = DEFAULT_EXPECT_HALF_DUPLEX;
 
     char* binary; // The binary data that will be sent
 
@@ -49,13 +50,19 @@ int main(int argc, char *argv[])
 
     /* Gets the prefered frequency of bits per second */
     if (arg_exists(argv, argc, "-f=")) {
-        char* f = get_arg_value(argv, argc, "-f=");
-        frequency = atoi(f);
+        char* _frequency = get_arg_value(argv, argc, "-f=");
+        frequency = atoi(_frequency);
     }
 
-    /* Gets the prefered debug of bits per second */
+    /* If the program protocol will print a debug log during transmission */
+    if (arg_exists(argv, argc, "-hd=")) {
+        char* hd = get_arg_value(argv, argc, "-hd=");
+        frequency = atoi(hd);
+    }
+
+    /* If the program protocol will print a debug log during transmission */
     if (arg_exists(argv, argc, "-l=")) {
-        char* l = get_arg_value(argv, argc, "-l=");
-        debug = atoi(l);
+        char* _debug = get_arg_value(argv, argc, "-l=");
+        debug = atoi(_debug);
     }
 }
