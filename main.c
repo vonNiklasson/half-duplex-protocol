@@ -61,4 +61,8 @@ int main(int argc, char *argv[])
         char* _debug = get_arg_value(argv, argc, "-l=");
         debug = atoi(_debug);
     }
+
+    /* Validate data here */
+
+
 }
