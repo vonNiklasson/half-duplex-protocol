@@ -2,7 +2,7 @@
  * Name: <Your name here>
  * Project: Half duplex protocol
  *
- * Source: gpio/gpio.h
+ * Source: platform/gpio.h
  */
 
 #ifndef GPIO_H_INCLUDED

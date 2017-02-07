@@ -2,8 +2,10 @@
  * Name: <Your name here>
  * Project: Half duplex protocol
  *
- * Source: gpio/gpio.c
+ * Source: platform/gpio.c
  */
+
+#include "gpio.h"
 
 /* Setup gpio ports here */
 int gpio_setup(void) {

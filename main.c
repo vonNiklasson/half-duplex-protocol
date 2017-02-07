@@ -10,10 +10,11 @@
 #include "src/comm.h"
 #include "src/convert.h"
 #include "src/functions.h"
+#include "platform/include.h"
 
 int main(int argc, char *argv[])
 {    
-    char* action = "s";
+    char* action = "s"; // Default action is to send
 
     char* binary; // The binary data that will be sent
 
@@ -64,5 +65,6 @@ int main(int argc, char *argv[])
 
     /* Validate data here */
 
+    //SendObject so = get_send_object(binary, frequency);
 
 }
