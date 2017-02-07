@@ -17,13 +17,13 @@ struct SendObject get_send_object(
     struct SendObject sendObject;
 }
 
-// Converts a SendObject to a StructuredSendObject
-struct StructuredSendObject get_structured_send_object(
+// Converts a SendObject to a ComputedSendObject
+struct ComputedSendObject get_structured_send_object(
     struct SendObject send_obj)
 {
-    struct StructuredSendObject sso;
+    struct ComputedSendObject cso;
 
-    sso.frequency = send_obj.frequency;
+    cso.frequency = send_obj.frequency;
 
-    return sso;
+    return cso;
 }

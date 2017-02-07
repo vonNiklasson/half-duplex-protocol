@@ -24,12 +24,13 @@ struct SendObject
     float frequency;
 };
 
-struct StructuredSendObject
+struct ComputedSendObject
 {   
+    unsigned char binary_handshake[DATA_HANDSHAKE_BITS_RESERVED];
     /* Doubled values because 0 will be sent as 01 and 1 will be sent as 10 */
-    unsigned char binary[DATA_BYTES_RESERVED * 2];
-    unsigned char settings[SETTINGS_BYTES_RESERVED * 2];
-    unsigned char byte_count[PACKET_NUMBER_BYTES_RESERVED * 2];
+    unsigned char binary_data[DATA_BYTES_RESERVED * 2];
+    unsigned char binary_data_byte_count[DATA_BYTES_COUNT_RESERVED * 2];
+    unsigned char binary_settings[DATA_SETTINGS_BYTES_RESERVED * 2];
     float frequency;
 };
 

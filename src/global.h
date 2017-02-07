@@ -13,10 +13,12 @@
 /* Number of bytes that can me transmitted */
 #define DATA_BYTES_RESERVED 32
 /* Number of bytes reserved for settings data */
-#define SETTINGS_BYTES_RESERVED 2
+#define DATA_SETTINGS_BYTES_RESERVED 2
 /* Number of bytes reserved to tell how many bytes will be transmitted 
  * (Must be related with DATA_BYTES_RESERVED) */
-#define PACKET_NUMBER_BYTES_RESERVED 1
+#define DATA_BYTES_COUNT_RESERVED 1
+/* Number of bytes that can me transmitted */
+#define DATA_HANDSHAKE_BITS_RESERVED 4
 
 /* Default values below */
 
