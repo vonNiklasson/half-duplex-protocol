@@ -14,9 +14,11 @@
 #include "functions.h"
 #include "../platform/include.h"
 
-/* Vars to be set by the caller */
+/* Variables to be set by the caller */
 unsigned char binary_data[DATA_BYTES_RESERVED];
 bool debug;
+
+/* Functions to be used by the caller */
 
 void initialize(void);
 

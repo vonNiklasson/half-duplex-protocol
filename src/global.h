@@ -5,7 +5,14 @@
  * Source: global.h
  */
 
-/* Version specific values below */
+#ifndef GLOBAL_H_INCLUDED
+#define GLOBAL_H_INCLUDED
+
+#include <stdbool.h>
+
+/*
+ * Version specific values below
+ */
 
 /* Version of the protocol */
 #define PROTOCOL_VERSION "0.1"
@@ -20,7 +27,9 @@
 /* Number of bytes that can me transmitted */
 #define DATA_HANDSHAKE_BITS_RESERVED 4
 
-/* Default values below */
+/*
+ * Default values below
+ */
 
 /* The default frequency if no frequency is given */
 #define DEFAULT_TRANSMIT_FREQUENCY 100
@@ -29,4 +38,6 @@
 #define DEFAULT_EXPECT_HALF_DUPLEX 0
 
 /* Wether to show debug messages or not */
-#define DEFAULT_DEBUG 0
+#define DEFAULT_DEBUG false
+
+#endif
