@@ -7,6 +7,11 @@
 
 #include "platform.h"
 
+/* Define a delay setup here */
+void platform_delay_setup() {
+
+}
+
 /* Define a delay here */
 void platform_delay(int microseconds) {
 

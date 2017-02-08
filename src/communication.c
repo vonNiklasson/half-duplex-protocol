@@ -25,6 +25,10 @@ void transmit(void) {
     /* Setup the gpio and pull gpio to low */
     platform_gpio_setup();
     platform_gpio_set_low();
+
+    /* Set the _data_count array to correct bits */
+    int byte_count = _count_bytes_in_use(send_data, DATA_BYTES_RESERVED);
+    data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
 }
 
 

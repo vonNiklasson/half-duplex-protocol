@@ -8,6 +8,7 @@
 #ifndef PLATFORM_H_INCLUDED
 #define PLATFORM_H_INCLUDED
 
+void platform_delay_setup();
 void platform_delay(int microseconds);
 
 void platform_gpio_setup(void);
