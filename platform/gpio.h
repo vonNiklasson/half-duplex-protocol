@@ -8,8 +8,8 @@
 #ifndef GPIO_H_INCLUDED
 #define GPIO_H_INCLUDED
 
-int gpio_setup(void);
-int gpio_set_high(void);
-int gpio_set_low(void);
+int platform_gpio_setup(void);
+int platform_gpio_set_high(void);
+int platform_gpio_set_low(void);
 
 #endif

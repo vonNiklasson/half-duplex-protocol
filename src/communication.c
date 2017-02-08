@@ -7,6 +7,21 @@
 
 #include "communication.h"
 
+/*
+ * Sending data
+ */
+
+void data_send(void) {
+    platform_gpio_setup();
+    platform_gpio_set_low();
+}
+
+
+
+/*
+ * Modifying the data array
+ */
+
 void data_set_bit(const int bit_position, const int bit) {
     int bit_pos = bit_position;
     int byte_pos = 0;
@@ -55,7 +70,7 @@ void data_fill_from_position(const int start_position, const int data) {
 }
 */
 
-void data_clear() {
+void data_clear(void) {
     int i;
     for (i = 0; i < DATA_BYTES_RESERVED; i++) {
         binary_data[i] = 0;
