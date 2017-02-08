@@ -8,12 +8,12 @@
 #include "communication.h"
 
 /*
- * Sending data
+ * Sending data functions
  */
 
 void initialize(void) {
     /* Clears the data */
-    data_clear();
+    data_clear(send_data, DATA_BYTES_RESERVED);
     /* Sets the default frequency */
     frequency = DEFAULT_FREQUENCY;
     /* Sets the default value of half duplex expectation */
@@ -22,7 +22,8 @@ void initialize(void) {
     debug = DEFAULT_DEBUG;
 }
 
-void data_send(void) {
+void transmit(void) {
+    /* Setup the gpio and pull gpio to low */
     platform_gpio_setup();
     platform_gpio_set_low();
 }
@@ -33,7 +34,7 @@ void data_send(void) {
  * Modifying the data array
  */
 
-void data_set_bit(const int bit_position, const int bit) {
+void data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit) {
     int bit_pos = bit_position;
     int byte_pos = 0;
 
@@ -44,26 +45,26 @@ void data_set_bit(const int bit_position, const int bit) {
     }
 
     /* Om positionen för byte är större än vad som ryms, avbryt */
-    if (byte_pos >= DATA_BYTES_RESERVED) {
+    if (byte_pos >= length) {
         return;
     }
 
     if (bit == 1) {
         /* Om biten är en 1:a, använd | (eller) */
-        binary_data[byte_pos] = binary_data[byte_pos] | (1 << (7 - bit_pos));
+        data[byte_pos] = data[byte_pos] | (1 << (7 - bit_pos));
     } else {
         /* Om biten är en 1:a, använd & (och) samt ~ (invertera) */
-        binary_data[byte_pos] = binary_data[byte_pos] & ~(1 << (7 - bit_pos));
+        data[byte_pos] = data[byte_pos] & ~(1 << (7 - bit_pos));
     }
 }
 
-void data_set_byte(const int byte_position, const int byte) {
+void data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte) {
     /* Om positionen för byte är större än vad som ryms, avbryt */
-    if (byte_position >= DATA_BYTES_RESERVED) {
+    if (byte_position >= length) {
         return;
     }
     
-    binary_data[byte_position] = byte;
+    data[byte_position] = byte;
 }
 
 /* Perhaps fix later, not very important right now
@@ -81,9 +82,9 @@ void data_fill_from_position(const int start_position, const int data) {
 }
 */
 
-void data_clear(void) {
+void data_clear(unsigned char *data, const int length) {
     int i;
-    for (i = 0; i < DATA_BYTES_RESERVED; i++) {
-        binary_data[i] = 0;
+    for (i = 0; i < length; i++) {
+        *(data + i) = 0;
     }
 }
