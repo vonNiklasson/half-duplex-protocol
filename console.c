@@ -6,7 +6,6 @@
  */
 
 #include <stdio.h>
-#include "src/functions.h"
 #include "src/communication.h"
 
 int main(int argc, char *argv[])

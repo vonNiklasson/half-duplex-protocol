@@ -163,3 +163,7 @@ void _set_gpio_with_increased_bit(const char bit, const int delay) {
     offset_bit = _get_increased_bit(bit, 0);
     _set_gpio(offset_bit, delay);
 }
+
+int _divide_round_up(const int n, const int d) {
+    return (n + (d - 1)) / d;
+}

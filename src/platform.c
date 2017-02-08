@@ -2,7 +2,7 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: platform.c
+ * Source: src/platform.c
  */
 
 #include <stdio.h>

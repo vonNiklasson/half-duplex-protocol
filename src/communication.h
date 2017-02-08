@@ -10,7 +10,6 @@
 
 #include <stdbool.h>
 
-#include "functions.h"
 #include "platform.h"
 
 
@@ -71,3 +70,5 @@ int _count_bytes_in_use(const unsigned char *data, const int length);
 int _get_increased_bit(char bit, const int offset);
 void _set_gpio_with_increased_bit(const char bit, const int delay);
 void _set_gpio(const char bit, const int delay);
+
+int _divide_round_up(const int n, const int d);
