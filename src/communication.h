@@ -12,7 +12,7 @@
 
 #include "global.h"
 #include "functions.h"
-#include "../platform/include.h"
+#include "platform.h"
 
 /* Variables to be set by the caller */
 unsigned char binary_data[DATA_BYTES_RESERVED];
