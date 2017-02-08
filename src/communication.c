@@ -22,7 +22,6 @@ void data_set_bit(const int bit_position, const int bit) {
         return;
     }
 
-    printf("Byte pos: %d\n", byte_pos);
     if (bit == 1) {
         /* Om biten är en 1:a, använd | (eller) */
         binary_data[byte_pos] = binary_data[byte_pos] | (1 << (7 - bit_pos));
