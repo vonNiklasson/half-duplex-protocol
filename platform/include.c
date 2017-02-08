@@ -4,3 +4,5 @@
  *
  * Source: platform/include.c
  */
+
+#include "include.h"

@@ -5,6 +5,8 @@
  * Source: convert.c
  */
 
+#include "convert.h"
+
 #include <string.h>
 
 #include "functions.h"
