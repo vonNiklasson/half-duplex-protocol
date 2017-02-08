@@ -32,10 +32,10 @@
  */
 
 /* The default frequency if no frequency is given */
-#define DEFAULT_TRANSMIT_FREQUENCY 100
+#define DEFAULT_FREQUENCY 100
 /* The default value of the transmission will expect to get feedback 
- * 0=Simplex, 1=Half duplex */
-#define DEFAULT_EXPECT_HALF_DUPLEX 0
+ * false=Simplex, true=Half duplex */
+#define DEFAULT_HALF_DUPLEX false
 
 /* Wether to show debug messages or not */
 #define DEFAULT_DEBUG false

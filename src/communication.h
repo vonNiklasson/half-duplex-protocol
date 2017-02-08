@@ -16,6 +16,8 @@
 
 /* Variables to be set by the caller */
 unsigned char binary_data[DATA_BYTES_RESERVED];
+int frequency;
+bool half_duplex;
 bool debug;
 
 /* Functions to be used by the caller */

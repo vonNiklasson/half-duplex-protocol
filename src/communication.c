@@ -14,6 +14,10 @@
 void initialize(void) {
     /* Clears the data */
     data_clear();
+    /* Sets the default frequency */
+    frequency = DEFAULT_FREQUENCY;
+    /* Sets the default value of half duplex expectation */
+    half_duplex = DEFAULT_HALF_DUPLEX;
     /* Set debug to default value */
     debug = DEFAULT_DEBUG;
 }
