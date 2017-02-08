@@ -1,8 +1,8 @@
-default: main
+default: console
 
-main: main.c src/comm.c src/functions.c src/convert.c src/global.c platform/include.c
-	gcc main.c src/comm.c src/functions.c src/convert.c src/global.c platform/include.c -o main.o
+console: console.c src/communication.c src/functions.c platform/include.c
+	gcc console.c src/communication.c src/functions.c platform/include.c -o console.o
 
 clean:
-	-rm -f main.o
-	-rm -f main
+	-rm -f console.o
+	-rm -f console
