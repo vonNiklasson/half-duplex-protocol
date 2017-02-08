@@ -16,22 +16,58 @@ void initialize(void) {
     data_clear(_data_count, DATA_BYTES_COUNT_RESERVED);
 
     /* Sets the default values unless changed */
-    frequency = DEFAULT_FREQUENCY;
+    bitrate = DEFAULT_BITRATE;
     half_duplex = DEFAULT_HALF_DUPLEX;
     debug = DEFAULT_DEBUG;
 }
 
 void transmit(void) {
-    /* Setup the gpio and pull gpio to low */
+    /* Setup the gpio & delay and pull gpio to low */
+    platform_delay_setup();
     platform_gpio_setup();
     platform_gpio_set_low();
 
     /* Set the _data_count array to correct bits */
     int byte_count = _count_bytes_in_use(send_data, DATA_BYTES_RESERVED);
     data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
+
+    /* Gets the delay per bit */
+    int delay_per_bit = (int)(1000000.0 / (bitrate * 1));
+
+    /*** Starts transmitting below ***/
+
+    /* Starts the bitrate initialization */
+    int i;
+    int j;
+    char bit;
+
+    for (i = 0; i < BITRATE_BITS_RESERVED; i++) {
+        if (i % 2 == 0) {
+            _set_gpio(1, delay_per_bit);
+        } else {
+            _set_gpio(0, delay_per_bit);
+        }
+    }
+
+    /* Send the settings as increased bits */
+    for (i = 0; i < SETTINGS_BYTES_RESERVED; i++) {
+        for (j = 7; j >= 0; j--) {
+            bit = (_settings[i] >> j) & 1;
+            _set_gpio_with_increased_bit(bit, delay_per_bit);
+        }
+    }
+
+    /* Send the data as increased bits */
+    for (i = 0; i < byte_count; i++) {
+        for (j = 7; j >= 0; j--) {
+            bit = (send_data[i] >> j) & 1;
+            _set_gpio_with_increased_bit(bit, delay_per_bit);
+        }
+    }
+
+    /* Sets the gpio to low after transmit */
+    platform_gpio_set_low();
 }
-
-
 
 /******************** Modifying data array ********************/
 
@@ -90,8 +126,10 @@ void data_clear(unsigned char *data, const int length) {
     }
 }
 
+
 /******************** Internal functions below ********************/
 
+/* Counts the number of bytes that are used */
 int _count_bytes_in_use(const unsigned char *data, const int length) {
     int i;
     for(i = length - 1; i >= 0; i--) {
@@ -100,4 +138,28 @@ int _count_bytes_in_use(const unsigned char *data, const int length) {
         }
     }
     return 0;
+}
+
+/* Takes one bit (or byte) and increases it with 1 and
+ * returns the value of the offset from right */
+int _get_increased_bit(char bit, const int offset) {
+    bit = bit + 1;
+    return (bit >> offset) & 1;
+}
+
+void _set_gpio(const char bit, const int delay) {
+    if (bit == 1) {
+        platform_gpio_set_high();
+    } else {
+        platform_gpio_set_low();
+    }
+    platform_delay(delay);
+}
+
+void _set_gpio_with_increased_bit(const char bit, const int delay) {
+    char offset_bit;
+    offset_bit = _get_increased_bit(bit, 1);
+    _set_gpio(offset_bit, delay);
+    offset_bit = _get_increased_bit(bit, 0);
+    _set_gpio(offset_bit, delay);
 }

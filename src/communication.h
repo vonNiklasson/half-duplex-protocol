@@ -25,15 +25,15 @@
  * (Must be related with DATA_BYTES_RESERVED) */
 #define DATA_BYTES_COUNT_RESERVED 1
 /* Number of bytes reserved for settings data */
-#define SETTINGS_BYTES_RESERVED 2
+#define SETTINGS_BYTES_RESERVED 1
 /* Number of bytes that can me transmitted */
-#define HANDSHAKE_BITS_RESERVED 4
+#define BITRATE_BITS_RESERVED 4
 
 
 /******************** Default values below ********************/
 
-/* The default frequency if no frequency is given */
-#define DEFAULT_FREQUENCY 100
+/* The default bitrate if no bitrate is given */
+#define DEFAULT_BITRATE 100
 /* The default value of the transmission will expect to get feedback 
  * false=Simplex, true=Half duplex */
 #define DEFAULT_HALF_DUPLEX false
@@ -45,7 +45,7 @@
 
 /* Variables to be set by the caller */
 unsigned char send_data[DATA_BYTES_RESERVED];
-int frequency;
+int bitrate;
 bool half_duplex;
 bool debug;
 
@@ -68,3 +68,6 @@ void data_clear(unsigned char *data, const int length);
 /******************** Internal functions below ********************/
 
 int _count_bytes_in_use(const unsigned char *data, const int length);
+int _get_increased_bit(char bit, const int offset);
+void _set_gpio_with_increased_bit(const char bit, const int delay);
+void _set_gpio(const char bit, const int delay);

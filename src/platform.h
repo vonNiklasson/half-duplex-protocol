@@ -15,4 +15,6 @@ void platform_gpio_setup(void);
 void platform_gpio_set_high(void);
 void platform_gpio_set_low(void);
 
+int platform_gpio_read(void);
+
 #endif
