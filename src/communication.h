@@ -64,3 +64,7 @@ void data_set_byte(unsigned char *data, const int length, const int byte_positio
 void data_clear(unsigned char *data, const int length);
 
 #endif
+
+/******************** Internal functions below ********************/
+
+int _count_bytes_in_use(const unsigned char *data, const int length);

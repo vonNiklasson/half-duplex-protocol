@@ -85,3 +85,15 @@ void data_clear(unsigned char *data, const int length) {
         *(data + i) = 0;
     }
 }
+
+/******************** Internal functions below ********************/
+
+int _count_bytes_in_use(const unsigned char *data, const int length) {
+    int i;
+    for(i = length - 1; i >= 0; i--) {
+        if (data[i] != 0) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
