@@ -7,18 +7,17 @@
 
 #include "communication.h"
 
-/*
- * Sending data functions
- */
+/******************** Sending data functions ********************/
 
 void initialize(void) {
     /* Clears the data */
     data_clear(send_data, DATA_BYTES_RESERVED);
-    /* Sets the default frequency */
+    data_clear(_settings, SETTINGS_BYTES_RESERVED);
+    data_clear(_data_count, DATA_BYTES_COUNT_RESERVED);
+
+    /* Sets the default values unless changed */
     frequency = DEFAULT_FREQUENCY;
-    /* Sets the default value of half duplex expectation */
     half_duplex = DEFAULT_HALF_DUPLEX;
-    /* Set debug to default value */
     debug = DEFAULT_DEBUG;
 }
 
@@ -30,9 +29,7 @@ void transmit(void) {
 
 
 
-/*
- * Modifying the data array
- */
+/******************** Modifying data array ********************/
 
 void data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit) {
     int bit_pos = bit_position;

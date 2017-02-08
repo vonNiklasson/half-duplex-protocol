@@ -21,13 +21,13 @@
 
 /* Number of bytes that can be transmitted of the actual binary data */
 #define DATA_BYTES_RESERVED 32
-/* Number of bytes reserved for settings data */
-#define DATA_SETTINGS_BYTES_RESERVED 2
 /* Number of bytes reserved to tell how many bytes will be transmitted 
  * (Must be related with DATA_BYTES_RESERVED) */
 #define DATA_BYTES_COUNT_RESERVED 1
+/* Number of bytes reserved for settings data */
+#define SETTINGS_BYTES_RESERVED 2
 /* Number of bytes that can me transmitted */
-#define DATA_HANDSHAKE_BITS_RESERVED 4
+#define HANDSHAKE_BITS_RESERVED 4
 
 
 /******************** Default values below ********************/
@@ -37,12 +37,11 @@
 /* The default value of the transmission will expect to get feedback 
  * false=Simplex, true=Half duplex */
 #define DEFAULT_HALF_DUPLEX false
-
 /* Wether to show debug messages or not */
 #define DEFAULT_DEBUG false
 
 
-/******************** Default values below ********************/
+/******************** Program variables below ********************/
 
 /* Variables to be set by the caller */
 unsigned char send_data[DATA_BYTES_RESERVED];
@@ -50,12 +49,15 @@ int frequency;
 bool half_duplex;
 bool debug;
 
-/* Functions to be used by the caller */
+unsigned char _settings[SETTINGS_BYTES_RESERVED];
+unsigned char _data_count[DATA_BYTES_COUNT_RESERVED];
+
+/******************** Functions to be used by the caller below ********************/
 
 void initialize(void);
 
 void transmit(void);
-void recieve(void);
+int recieve(void);
 
 void data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit);
 void data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte);
