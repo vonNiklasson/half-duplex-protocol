@@ -11,6 +11,13 @@
  * Sending data
  */
 
+void initialize(void) {
+    /* Clears the data */
+    data_clear();
+    /* Set debug to default value */
+    debug = DEFAULT_DEBUG;
+}
+
 void data_send(void) {
     platform_gpio_setup();
     platform_gpio_set_low();
