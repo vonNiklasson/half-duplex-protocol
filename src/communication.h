@@ -20,11 +20,11 @@
 
 /* Number of bytes that can be transmitted of the actual binary data */
 #define DATA_BYTES_RESERVED 32
+/* Number of bytes reserved for settings data */
+#define SETTINGS_BYTES_RESERVED 1
 /* Number of bytes reserved to tell how many bytes will be transmitted 
  * (Must be related with DATA_BYTES_RESERVED) */
 #define DATA_BYTES_COUNT_RESERVED 1
-/* Number of bytes reserved for settings data */
-#define SETTINGS_BYTES_RESERVED 1
 /* Number of bytes that can me transmitted */
 #define BITRATE_BITS_RESERVED 4
 

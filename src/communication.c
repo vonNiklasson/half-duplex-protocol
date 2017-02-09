@@ -28,7 +28,7 @@ void transmit(void) {
     platform_gpio_set_low();
 
     /* Set the _data_count array to correct bits */
-    int byte_count = _count_bytes_in_use(send_data, DATA_BYTES_RESERVED);
+    unsigned char byte_count = _count_bytes_in_use(send_data, DATA_BYTES_RESERVED);
     data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
 
     /* Gets the delay per bit */
@@ -54,6 +54,14 @@ void transmit(void) {
         for (j = 7; j >= 0; j--) {
             bit = (_settings[i] >> j) & 1;
             _set_gpio_with_increased_bit(bit, delay_per_bit);
+        }
+    }
+
+    /* Send the number as increased bits of bytes that will be sent in the next step */
+    for (i = 0; i < DATA_BYTES_COUNT_RESERVED; i++) {
+        for (j = 7; j >= 0; j--) {
+            bit = (byte_count >> j) & 1;
+            _set_gpio(bit, delay_per_bit);
         }
     }
 
