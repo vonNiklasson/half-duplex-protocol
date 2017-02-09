@@ -61,7 +61,7 @@ void transmit(void) {
     for (i = 0; i < DATA_BYTES_COUNT_RESERVED; i++) {
         for (j = 7; j >= 0; j--) {
             bit = (byte_count >> j) & 1;
-            _set_gpio(bit, delay_per_bit);
+            _set_gpio_with_increased_bit(bit, delay_per_bit);
         }
     }
 
