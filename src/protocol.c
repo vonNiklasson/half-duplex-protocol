@@ -2,10 +2,10 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: src/communication.c
+ * Source: src/protocol.c
  */
 
-#include "communication.h"
+#include "protocol.h"
 
 /******************** Sending data functions ********************/
 
@@ -32,7 +32,7 @@ void transmit(void) {
     data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
 
     /* Gets the delay per bit */
-    int delay_per_bit = (int)(1000000.0 / (bitrate * 1));
+    int delay_per_bit = (int)(1000000.0 / (bitrate));
 
     /*** Starts transmitting below ***/
 

@@ -2,15 +2,15 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: src/communication.h
+ * Source: src/protocol.h
  */
 
-#ifndef COMMUNICATION_H_INCLUDED
-#define COMMUNICATION_H_INCLUDED
+#ifndef PROTOCOL_H_INCLUDED
+#define PROTOCOL_H_INCLUDED
 
 #include <stdbool.h>
 
-#include "platform.h"
+#include "protocol_platform.h"
 
 
 /******************** Version specific values below ********************/

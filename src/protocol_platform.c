@@ -2,11 +2,11 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: src/platform.c
+ * Source: src/protocol_platform.c
  */
 
 #include <stdio.h>
-#include "platform.h"
+#include "protocol_platform.h"
 
 /* Define a delay setup here */
 void platform_delay_setup() {

@@ -1,6 +1,6 @@
 default: console
 
-console: console.c src/communication.c src/platform.c
+console: console.c src/protocol.c src/protocol_platform.c
 	gcc -Wall console.c src/*.c -o console.o
 
 clean:

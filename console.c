@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#include "src/communication.h"
+#include "src/protocol.h"
 
 int main(int argc, char *argv[])
 {

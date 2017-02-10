@@ -2,11 +2,11 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: platform.h
+ * Source: protocol_platform.h
  */
 
-#ifndef PLATFORM_H_INCLUDED
-#define PLATFORM_H_INCLUDED
+#ifndef PROTOCOL_PLATFORM_H_INCLUDED
+#define PROTOCOL_PLATFORM_H_INCLUDED
 
 void platform_delay_setup();
 void platform_delay(int microseconds);
