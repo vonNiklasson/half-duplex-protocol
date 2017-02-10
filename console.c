@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[])
 {
+    initialize();
+
     bitrate = 10;
     data_set_byte(send_data, DATA_BYTES_RESERVED, 0, 'j');
     data_set_byte(send_data, DATA_BYTES_RESERVED, 1, 'o');

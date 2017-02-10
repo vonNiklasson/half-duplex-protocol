@@ -10,6 +10,9 @@
 /******************** Sending data functions ********************/
 
 void initialize(void) {
+    platform_delay_setup();
+    platform_gpio_setup();
+
     /* Clears the data */
     data_clear(send_data, DATA_BYTES_RESERVED);
     data_clear(_settings, SETTINGS_BYTES_RESERVED);
@@ -23,8 +26,8 @@ void initialize(void) {
 
 void transmit(void) {
     /* Setup the gpio & delay and pull gpio to low */
-    platform_delay_setup();
-    platform_gpio_setup();
+    platform_delay_pre_transfer(false);
+    platform_gpio_pre_transfer(false);
     platform_gpio_set_low();
 
     /* Set the _data_count array to correct bits */
@@ -75,6 +78,8 @@ void transmit(void) {
 
     /* Sets the gpio to low after transmit */
     platform_gpio_set_low();
+    platform_gpio_post_transfer(false);
+    platform_delay_post_transfer(false);
 }
 
 /******************** Modifying data array ********************/
