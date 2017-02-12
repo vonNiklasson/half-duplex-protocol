@@ -10,6 +10,10 @@
 
 int main(int argc, char *argv[])
 {
+    float t = 995;
+    int s = 1000/t;
+    printf("%d\n", 1000/s);
+    return;
     int transmit = 0;
 
     hdp_initialize();
