@@ -103,7 +103,7 @@ int hdp_recieve(void) {
     /* Sets local variables to determine the bitrate */
     int bitrate_previous_bit = 0;
     int i;
-    
+
     /* Wait for the first bit before entering the loop to determine the bitrate */
     while (platform_gpio_read() == 0);
 
