@@ -40,12 +40,12 @@ void platform_delay(const int milliseconds) {
  * A guide can be found here:
  * http://pinout.xyz/pinout/
  */
-int INPUT_PIN = 7; // BCM Input 4
-int OUTPUT_PIN = 0; // BCM Input 17
+int INPUT_PIN = 4; // BCM Input 4
+int OUTPUT_PIN = 17; // BCM Input 17
 
 /* Setup gpio ports here */
 void platform_gpio_setup(void) {
-    wiringPiSetup();
+    wiringPiSetupGpio();
     pinMode(INPUT_PIN, INPUT);
     pinMode(OUTPUT_PIN, OUTPUT);
 }
