@@ -279,6 +279,5 @@ int _read_increased_bit(const int delay) {
     /* Read next bit as normal */
     bit += platform_gpio_read();
     /* Subtract 1 from the bit */
-    if (DEBUG) { platform_debug("Bit set to ", bit - 1); }
     return bit - 1;
 }
