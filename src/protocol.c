@@ -100,7 +100,6 @@ unsigned char hdp_recieve(void) {
 
     /* Resets the delay per bit */
     _recieve_delay_per_bit = 0;
-    float temp_delay = 0;
 
     /* Sets local variables to determine the bitrate */
     int bitrate_previous_bit = 0;
@@ -113,25 +112,25 @@ unsigned char hdp_recieve(void) {
     for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
-            platform_delay(10); // Delay with 1 millisecond
-            temp_delay += 10;
+            platform_delay(5); // Delay with 1 millisecond
+            _recieve_delay_per_bit += 5;
         }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
 
     /* Calculate the avarage delay per bit */
-    if (DEBUG) { platform_debug("Total delay", temp_delay); }
+    if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
 
-    temp_delay = temp_delay / (BITRATE_BITS_RESERVED - 1);
-    if (DEBUG) { platform_debug("Avarage delay", temp_delay); }
-    if (DEBUG) { platform_debug("Bitrate", (1000 / temp_delay)); }
+    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
+    if (DEBUG) { platform_debug("1 Avarage delay", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("1 Bitrate", (1000 / _recieve_delay_per_bit)); }
 
-    temp_delay = (1000 / (float)temp_delay);
-    _recieve_delay_per_bit = (int)(1000 / temp_delay);
+    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
+    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
 
-    if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("Bitrate", (1000 / _recieve_delay_per_bit)); }
+    if (DEBUG) { platform_debug("2 Avarage delay", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("2 Bitrate", (1000 / _recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit * 1.5);

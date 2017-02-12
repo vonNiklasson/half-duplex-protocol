@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "src/protocol.h"
 
+int round_up_to_max_pow10(int n);
 int main(int argc, char *argv[])
 {
     int transmit = 0;
