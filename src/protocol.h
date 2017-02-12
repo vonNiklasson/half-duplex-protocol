@@ -37,7 +37,7 @@
  * false=Simplex, true=Half duplex */
 #define DEFAULT_HALF_DUPLEX false
 /* Wether to show debug messages or not. Is a constant so it will be deoptimized if needed */
-#define DEBUG false
+#define DEBUG true
 
 
 /******************** Program variables below ********************/

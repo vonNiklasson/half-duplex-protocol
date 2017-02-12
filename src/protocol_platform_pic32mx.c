@@ -104,3 +104,11 @@ void platform_gpio_set_low(void) {
 int platform_gpio_read(void) {
     return (PORTD >> 5) & 0x7;
 }
+
+
+/******************** DEBUG functions below ********************/
+
+/* Setup eventual function to debug */
+void platform_debug(char *str, char val) {
+    return;
+}

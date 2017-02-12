@@ -105,6 +105,7 @@ unsigned char hdp_recieve(void) {
     int bitrate_previous_bit = 0;
     int i;
 
+    if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
     /* Wait for the first bit before entering the loop to determine the bitrate */
     while (platform_gpio_read() == 0);
 
@@ -121,8 +122,8 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    if (DEBUG) { debug("Delay per bit", _recieve_delay_per_bit); }
-    if (DEBUG) { debug("Delay per bit", (1000/_recieve_delay_per_bit)); }
+    if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("Delay per bit", (1000/_recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit / 2);
