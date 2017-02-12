@@ -130,6 +130,7 @@ unsigned char hdp_recieve(void) {
     temp_delay = (100 /_recieve_delay_per_bit);
     /* Purposfully divide by 100 to force a rounding of the number */
     _recieve_delay_per_bit = temp_delay;
+    printf("%d\n", _recieve_delay_per_bit);
     _recieve_delay_per_bit = (100 / _recieve_delay_per_bit);
     printf("%d\n", _recieve_delay_per_bit);
 
