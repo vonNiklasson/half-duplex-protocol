@@ -100,6 +100,7 @@ unsigned char hdp_recieve(void) {
 
     /* Resets the delay per bit */
     _recieve_delay_per_bit = 0;
+    float temp_delay = 0;
 
     /* Sets local variables to determine the bitrate */
     int bitrate_previous_bit = 0;
@@ -124,10 +125,11 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
-    if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("Avarage delay", _recieve_settingsdelay_per_bit); }
 
+    temp_delay = (100 /_recieve_delay_per_bit);
     /* Purposfully divide by 100 to force a rounding of the number */
-    _recieve_delay_per_bit = (100 /_recieve_delay_per_bit);
+    _recieve_delay_per_bit = temp_delay;
     printf("%f\n", _recieve_delay_per_bit);
     _recieve_delay_per_bit = (100 / _recieve_delay_per_bit);
     printf("%f\n", _recieve_delay_per_bit);
