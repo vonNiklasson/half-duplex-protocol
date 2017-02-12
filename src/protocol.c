@@ -123,14 +123,13 @@ unsigned char hdp_recieve(void) {
     if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
 
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
-    if (DEBUG) { platform_debug("1 Avarage delay", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("1 Bitrate", (1000 / _recieve_delay_per_bit)); }
 
+    /* Divide by 1000 and back again to round the value */
     _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
     _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
 
-    if (DEBUG) { platform_debug("2 Avarage delay", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("2 Bitrate", (1000 / _recieve_delay_per_bit)); }
+    if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("Bitrate", (1000 / _recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit * 1.5);
