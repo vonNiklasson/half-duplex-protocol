@@ -27,6 +27,7 @@ int _divide_round_up(const int n, const int d);
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
 
+int _read_increased_bit(const int delay);
 
 /******************** Sending data functions ********************/
 
@@ -117,14 +118,10 @@ int hdp_recieve(void) {
         bitrate_previous_bit = !bitrate_previous_bit;
     }
 
+    /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    while (1) {
-        platform_delay(_recieve_delay_per_bit);
-        platform_gpio_set_low();
-        platform_delay(_recieve_delay_per_bit);
-        platform_gpio_set_high();
-    }
+    /* Start reading bits from the transmitted data  below */
 
     /* Desetup the gpio & delay to low */
     platform_gpio_post_transfer(true);
@@ -242,4 +239,19 @@ void _transmit_bytes(const unsigned char *data, const int length, const int dela
             _transmit_to_gpio_with_increased_bit(bit, delay_per_bit);
         }
     }
+}
+
+int _read_increased_bit(const int delay) {
+    int bit = 0;
+    /* Read first bit, but multiply by 2 */
+    bit += platform_gpio_read() << 1;
+    platform_delay(delay);
+    /* Read next bit as normal */
+    bit += platform_gpio_read();
+    /* Subtract 1 from the bit */
+    return bit - 1;
+}
+
+char _read_byte(const int delay) {
+    
 }

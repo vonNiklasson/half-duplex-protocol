@@ -29,7 +29,7 @@ void platform_delay_setup() {
 
 /* Define a delay pre transfer here (will be called before transfer starts)
  * recieve: false=sending data, true=recieving data */
-void platform_delay_pre_transfer(bool recieve) {
+void platform_delay_pre_transfer(const bool recieve) {
     /* Starts Timer 2 */
     T2CONSET = 0x8000;
     return;
@@ -37,14 +37,14 @@ void platform_delay_pre_transfer(bool recieve) {
 
 /* Define a delay post transfer here (will be called after transfer is done)
  * recieve: false=sending data, true=recieving data */
-void platform_delay_post_transfer(bool recieve) {
+void platform_delay_post_transfer(const bool recieve) {
     /* Stops Timer 2 */
     T2CONCLR = 0x8000;
     return;
 }
 
 /* Define a delay here */
-void platform_delay(int milliseconds) {
+void platform_delay(const int milliseconds) {
     int i;
     for (i = 0; i < milliseconds; i++) {
         while ((IFS(0) & 0x100) == 0);
@@ -68,13 +68,13 @@ void platform_gpio_setup(void) {
 
 /* Define a gpio pre transfer here (will be called before transfer starts)
  * recieve: false=sending data, true=recieving data */
-void platform_gpio_pre_transfer(bool recieve) {
+void platform_gpio_pre_transfer(const bool recieve) {
     return;
 }
 
 /* Define a gpio post transfer here (will be called after transfer is done)
  * recieve: false=sending data, true=recieving data */
-void platform_gpio_post_transfer(bool recieve) {
+void platform_gpio_post_transfer(const bool recieve) {
     return;
 }
 

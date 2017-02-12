@@ -11,14 +11,14 @@
 #include <stdbool.h>
 
 void platform_delay_setup();
-void platform_delay_pre_transfer(bool recieve);
-void platform_delay_post_transfer(bool recieve);
-void platform_delay(int milliseconds);
+void platform_delay_pre_transfer(const bool recieve);
+void platform_delay_post_transfer(const bool recieve);
+void platform_delay(const int milliseconds);
 
 void platform_gpio_setup(void);
-void platform_gpio_pre_transfer(bool recieve);
-void platform_gpio_post_transfer(bool recieve);
-void platform_gpio_set(int state);
+void platform_gpio_pre_transfer(const bool recieve);
+void platform_gpio_post_transfer(const bool recieve);
+void platform_gpio_set(const int state);
 void platform_gpio_set_high(void);
 void platform_gpio_set_low(void);
 
