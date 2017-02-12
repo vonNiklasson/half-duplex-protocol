@@ -110,7 +110,7 @@ unsigned char hdp_recieve(void) {
     while (platform_gpio_read() == 0);
 
     if (DEBUG) { platform_debug("Have it!", 0); }
-    for (i = 0; i < BITRATE_BITS_RESERVED; i++) {
+    for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
             platform_delay(1); // Delay with 1 millisecond
@@ -123,7 +123,7 @@ unsigned char hdp_recieve(void) {
 
     /* Calculate the avarage delay per bit */
     if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
-    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED);
+    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
     if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
 
     /* Purposfully divide by 100 to force a rounding of the number */
