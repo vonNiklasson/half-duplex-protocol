@@ -123,8 +123,9 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    _recieve_delay_per_bit = (1000/_recieve_delay_per_bit);
-    _recieve_delay_per_bit = 1000 / _recieve_delay_per_bit;
+    /* Purposfully divide by 100 to force a rounding of the number */
+    _recieve_delay_per_bit = (100/_recieve_delay_per_bit);
+    _recieve_delay_per_bit = 100 / _recieve_delay_per_bit;
 
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
     if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
