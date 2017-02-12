@@ -112,8 +112,8 @@ unsigned char hdp_recieve(void) {
     for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
-            platform_delay(2); // Delay with 1 millisecond
-            _recieve_delay_per_bit += 2;
+            platform_delay(5); // Delay with 1 millisecond
+            _recieve_delay_per_bit += 5;
         }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
