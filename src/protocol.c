@@ -19,14 +19,15 @@ unsigned char _recieve_settings[SETTINGS_BYTES_RESERVED];
 unsigned char _recieve_data_count[DATA_BYTES_COUNT_RESERVED];
 
 int _count_bytes_in_use(const unsigned char *data, const int length);
-int _get_increased_bit(char bit, const int offset);
-void _transmit_to_gpio_with_increased_bit(const char bit, const int delay);
-void _transmit_to_gpio(const char bit, const int delay);
+int _get_increased_bit(unsigned char bit, const int offset);
+void _transmit_to_gpio_with_increased_bit(const unsigned char bit, const int delay);
+void _transmit_to_gpio(const unsigned char bit, const int delay);
 
 int _divide_round_up(const int n, const int d);
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
 
+unsigned char _read_byte(const int predelay, const int delay);
 int _read_increased_bit(const int delay);
 
 /******************** Sending data functions ********************/
@@ -93,7 +94,7 @@ void hdp_transmit(void) {
     platform_delay_post_transfer(false);
 }
 
-int hdp_recieve(void) {
+unsigned char hdp_recieve(void) {
     /* Setup the gpio & delay to low */
     platform_delay_pre_transfer(true);
     platform_gpio_pre_transfer(true);
@@ -122,12 +123,14 @@ int hdp_recieve(void) {
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
     /* Start reading bits from the transmitted data  below */
+    platform_delay(_recieve_delay_per_bit / 2);
+    unsigned char test = _read_byte(0, _recieve_delay_per_bit);
 
     /* Desetup the gpio & delay to low */
     platform_gpio_post_transfer(true);
     platform_delay_post_transfer(true);
 
-    return 0;
+    return test;
 }
 
 
@@ -204,12 +207,12 @@ int _count_bytes_in_use(const unsigned char *data, const int length) {
 
 /* Takes one bit (or byte) and increases it with 1 and
  * returns the value of the offset from right */
-int _get_increased_bit(char bit, const int offset) {
+int _get_increased_bit(unsigned char bit, const int offset) {
     bit = bit + 1;
     return (bit >> offset) & 1;
 }
 
-void _transmit_to_gpio(const char bit, const int delay) {
+void _transmit_to_gpio(const unsigned char bit, const int delay) {
     if (bit == 1) {
         platform_gpio_set_high();
     } else {
@@ -218,8 +221,8 @@ void _transmit_to_gpio(const char bit, const int delay) {
     platform_delay(delay);
 }
 
-void _transmit_to_gpio_with_increased_bit(const char bit, const int delay) {
-    char offset_bit;
+void _transmit_to_gpio_with_increased_bit(const unsigned char bit, const int delay) {
+    unsigned char offset_bit;
     offset_bit = _get_increased_bit(bit, 1);
     _transmit_to_gpio(offset_bit, delay);
     offset_bit = _get_increased_bit(bit, 0);
@@ -231,7 +234,7 @@ int _divide_round_up(const int n, const int d) {
 }
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit) {
-    char bit;
+    unsigned char bit;
     int i, j;
     for (i = 0; i < length; i++) {
         for (j = 7; j >= 0; j--) {
@@ -239,6 +242,18 @@ void _transmit_bytes(const unsigned char *data, const int length, const int dela
             _transmit_to_gpio_with_increased_bit(bit, delay_per_bit);
         }
     }
+}
+
+unsigned char _read_byte(const int predelay, const int delay) {
+    if (predelay) {
+        platform_delay(predelay);
+    }
+    unsigned char r = 0;
+    int i;
+    for (i = 7; i >= 0; i--) {
+        r |= _read_increased_bit(delay) << i;
+    }
+    return r;
 }
 
 int _read_increased_bit(const int delay) {
@@ -250,8 +265,4 @@ int _read_increased_bit(const int delay) {
     bit += platform_gpio_read();
     /* Subtract 1 from the bit */
     return bit - 1;
-}
-
-char _read_byte(const int delay) {
-    
 }

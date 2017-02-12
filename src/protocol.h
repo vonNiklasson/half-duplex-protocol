@@ -58,7 +58,7 @@ unsigned char hdp_recieve_data[DATA_BYTES_RESERVED];
 void hdp_initialize(void);
 
 void hdp_transmit(void);
-int hdp_recieve(void);
+unsigned char hdp_recieve(void);
 
 void hdp_data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit);
 void hdp_data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte);
