@@ -36,14 +36,12 @@
 /* The default value of the transmission will expect to get feedback 
  * false=Simplex, true=Half duplex */
 #define DEFAULT_HALF_DUPLEX false
-/* Wether to show debug messages or not */
-#define DEFAULT_DEBUG false
+/* Wether to show debug messages or not. Is a constant so it will be deoptimized if needed */
+#define DEBUG false
 
 
 /******************** Program variables below ********************/
 /* Variables to be set by the caller (may have functions to cover as well) */
-
-bool hdp_debug;
 
 /* Send data */
 unsigned char hdp_send_data[DATA_BYTES_RESERVED];

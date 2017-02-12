@@ -48,7 +48,6 @@ void hdp_initialize(void) {
     /* Sets the default values unless changed */
     hdp_bitrate = DEFAULT_BITRATE;
     hdp_half_duplex = DEFAULT_HALF_DUPLEX;
-    hdp_debug = DEFAULT_DEBUG;
 
     _recieve_delay_per_bit = 0;
 }
@@ -122,15 +121,14 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    printf("Delay per bit: %d\n", _recieve_delay_per_bit);
-    printf("Bitrate: %d\n", (1000/_recieve_delay_per_bit));
+    if (DEBUG) { debug("Delay per bit", _recieve_delay_per_bit); }
+    if (DEBUG) { debug("Delay per bit", (1000/_recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit / 2);
     unsigned char test;
     for (i = 0; i < 10; i++) {
         test = _read_byte(0, _recieve_delay_per_bit);
-        printf("Byte %d: %d    %c\n", i, test, test);
     }
 
     /* Desetup the gpio & delay to low */
@@ -186,7 +184,7 @@ void data_fill_from_position(const int start_position, const int data) {
 
     int i;
     for (i = 0; i < 8; i++) {
-        printf("%d\n", i);
+
     }
 }
 */
