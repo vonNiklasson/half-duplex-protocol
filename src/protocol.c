@@ -127,16 +127,16 @@ unsigned char hdp_recieve(void) {
     if (DEBUG) { platform_debug("Avarage delay", temp_delay); }
     if (DEBUG) { platform_debug("Bitrate", (1000 / temp_delay)); }
 
-    temp_delay = (100 / (float)temp_delay);
+    temp_delay = (1000 / (float)temp_delay);
 
     //_recieve_delay_per_bit = temp_delay;
-    _recieve_delay_per_bit = (100 / temp_delay);
+    _recieve_delay_per_bit = (1000 / temp_delay);
 
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
     if (DEBUG) { platform_debug("Bitrate", (1000 / _recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
-    platform_delay(_recieve_delay_per_bit / 2);
+    platform_delay(_recieve_delay_per_bit * 1.5);
     unsigned char temp_byte;
 
     /* Read settings */
