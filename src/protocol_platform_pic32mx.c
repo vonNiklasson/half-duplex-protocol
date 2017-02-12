@@ -17,7 +17,7 @@
 
 /* Define a delay setup here (will be called when protocol inits, may be more than once) */
 void platform_delay_setup() {
-  /* Set the prescaling to 64:1 
+  /* Set the prescaling to 64:1
    * bit 4-6 decides the prescaling
    * 0x60 == 01100000 */
     T2CON = 0x60;
