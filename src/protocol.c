@@ -157,9 +157,6 @@ unsigned char hdp_recieve(void) {
         temp_byte = _read_byte(_recieve_delay_per_bit);
         /* Do a validity check here too */
         hdp_recieve_data[i] = temp_byte;
-    }
-
-    for (i = 0; i < _recieve_data_count[0]; i++) {
         if (DEBUG) { platform_debug("Byte", temp_byte); }
     }
 
