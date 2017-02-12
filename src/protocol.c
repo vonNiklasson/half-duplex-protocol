@@ -124,11 +124,11 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
-
     _recieve_delay_per_bit = (1000/_recieve_delay_per_bit);
     _recieve_delay_per_bit = 1000 / _recieve_delay_per_bit;
+
+    if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
@@ -274,10 +274,11 @@ unsigned char _read_byte(const int predelay, const int delay) {
 int _read_increased_bit(const int delay) {
     int bit = 0;
     /* Read first bit, but multiply by 2 */
-    bit += platform_gpio_read() << 1;
+    bit += (platform_gpio_read() << 1);
     platform_delay(delay);
     /* Read next bit as normal */
     bit += platform_gpio_read();
     /* Subtract 1 from the bit */
+    if (DEBUG) { platform_debug("Bit set to ", bit); }
     return bit - 1;
 }
