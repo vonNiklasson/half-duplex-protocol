@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
         hdp_transmit();
 
     } else {
-        unsigned char c = hdp_recieve();
-        printf("Value: %c\n", c);
+        hdp_recieve();
+        printf("Value: %s\n", hdp_recieve_data);
     }
 
 

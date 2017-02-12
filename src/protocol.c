@@ -27,7 +27,7 @@ int _divide_round_up(const int n, const int d);
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
 
-unsigned char _read_byte(const int predelay, const int delay);
+unsigned char _read_byte(const int delay);
 int _read_increased_bit(const int delay);
 
 /******************** Sending data functions ********************/
@@ -109,7 +109,7 @@ unsigned char hdp_recieve(void) {
     /* Wait for the first bit before entering the loop to determine the bitrate */
     while (platform_gpio_read() == 0);
 
-    for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
+    for (i = 0; i < BITRATE_BITS_RESERVED; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
             platform_delay(5); // Delay with 1 millisecond
@@ -121,7 +121,7 @@ unsigned char hdp_recieve(void) {
     }
 
     /* Calculate the avarage delay per bit */
-    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
+    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED);
 
     /* Purposfully divide by 100 to force a rounding of the number */
     _recieve_delay_per_bit = (100/_recieve_delay_per_bit);
@@ -131,19 +131,41 @@ unsigned char hdp_recieve(void) {
     if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
-    platform_delay(_recieve_delay_per_bit);
     platform_delay(_recieve_delay_per_bit / 2);
-    unsigned char val;
-    for (i = 0; i < 7; i++) {
-        val = _read_byte(0, _recieve_delay_per_bit);
-        if (DEBUG) { platform_debug("Byte", val); }
+    unsigned char temp_byte;
+
+    /* Read settings */
+    for (i = 0; i < SETTINGS_BYTES_RESERVED; i++) {
+        temp_byte = _read_byte(_recieve_delay_per_bit);
+        /* Do a validity check here */
+        _recieve_settings[i] = temp_byte;
+    }
+
+    /* Get byte count */
+    for (i = 0; i < DATA_BYTES_COUNT_RESERVED; i++) {
+        temp_byte = _read_byte(_recieve_delay_per_bit);
+        /* Do a validity check here too */
+        _recieve_data_count[i] = temp_byte;
+    }
+
+    if (DEBUG) { platform_debug("Byte count", _recieve_data_count[0]); }
+
+    /* Read the actual data */
+    for (i = 0; i < _recieve_data_count[0]; i++) {
+        temp_byte = _read_byte(_recieve_delay_per_bit);
+        /* Do a validity check here too */
+        hdp_recieve_data[i] = temp_byte;
+    }
+
+    for (i = 0; i < _recieve_data_count[0]; i++) {
+        if (DEBUG) { platform_debug("Byte", temp_byte); }
     }
 
     /* Desetup the gpio & delay to low */
     platform_gpio_post_transfer(true);
     platform_delay_post_transfer(true);
 
-    return val;
+    return 1;
 }
 
 
@@ -257,10 +279,7 @@ void _transmit_bytes(const unsigned char *data, const int length, const int dela
     }
 }
 
-unsigned char _read_byte(const int predelay, const int delay) {
-    if (predelay) {
-        platform_delay(predelay);
-    }
+unsigned char _read_byte(const int delay) {
     unsigned char r = 0;
     int i;
     for (i = 7; i >= 0; i--) {
