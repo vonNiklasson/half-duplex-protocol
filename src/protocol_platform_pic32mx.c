@@ -10,17 +10,17 @@
 
 /******************** Delay functions below ********************/
 
-#define TMR2PERIOD ((80000000 / 256) / 1000)
+#define TMR2PERIOD ((80000000 / 64) / 1000)
 #if TMR2PERIOD > 0xffff
 #error "Timer period is too big."
 #endif
 
 /* Define a delay setup here (will be called when protocol inits, may be more than once) */
 void platform_delay_setup() {
-  /* Set the prescaling to 256:1 
+  /* Set the prescaling to 64:1 
    * bit 4-6 decides the prescaling
-   * 0x70 == 01110000 */
-    T2CON = 0x70;
+   * 0x60 == 01100000 */
+    T2CON = 0x60;
     /* Count from 0 */
     TMR2 = 0x00;
     /* Count to period set above */
@@ -58,9 +58,11 @@ void platform_delay(int milliseconds) {
 
 /* Setup gpio ports here */
 void platform_gpio_setup(void) {
-    /* Set the LED to outputs */
-    TRISECLR = 0xff;
-    PORTECLR = 0xff;
+    /* Set GPIO 26 (also LED) to output */
+    TRISECLR = 0x1;
+    PORTECLR = 0x1;
+    /* Set the buttons to input */
+    TRISDSET = 0x800;
     return;
 }
 
@@ -74,6 +76,15 @@ void platform_gpio_pre_transfer(bool recieve) {
  * recieve: false=sending data, true=recieving data */
 void platform_gpio_post_transfer(bool recieve) {
     return;
+}
+
+/* Doesn't need modification */
+void platform_gpio_set(int state) {
+    if (state) {
+        platform_gpio_set_high();
+    } else {
+        platform_gpio_set_low();
+    }
 }
 
 /* Setup procedure on gpio high here */
@@ -91,5 +102,5 @@ void platform_gpio_set_low(void) {
 
 /* Setup procedure on reading the gpio here */
 int platform_gpio_read(void) {
-    return 0;
+    return (PORTD >> 5) & 0x7;
 }

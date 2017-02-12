@@ -41,12 +41,17 @@
 
 
 /******************** Program variables below ********************/
-
 /* Variables to be set by the caller (may have functions to cover as well) */
+
+bool hdp_debug;
+
+/* Send data */
 unsigned char hdp_send_data[DATA_BYTES_RESERVED];
 int hdp_bitrate;
 bool hdp_half_duplex;
-bool hdp_debug;
+
+/* Recieve data */
+unsigned char hdp_recieve_data[DATA_BYTES_RESERVED];
 
 /******************** Functions to be used by the caller below ********************/
 
