@@ -26,7 +26,7 @@
  * (Must be related with DATA_BYTES_RESERVED) */
 #define DATA_BYTES_COUNT_RESERVED 1
 /* Number of bytes that can me transmitted */
-#define BITRATE_BITS_RESERVED 4
+#define BITRATE_BITS_RESERVED 5
 
 
 /******************** Default values below ********************/
