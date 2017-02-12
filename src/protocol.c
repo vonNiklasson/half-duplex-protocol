@@ -124,7 +124,11 @@ unsigned char hdp_recieve(void) {
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit / 2);
-    unsigned char test = _read_byte(0, _recieve_delay_per_bit);
+    unsigned char test;
+    for (i = 0; i < 10; i++) {
+        test = _read_byte(0, _recieve_delay_per_bit);
+        printf("Byte %d: %d    %c" i, test, test);
+    }
 
     /* Desetup the gpio & delay to low */
     platform_gpio_post_transfer(true);
