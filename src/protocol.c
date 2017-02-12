@@ -115,7 +115,8 @@ unsigned char hdp_recieve(void) {
             platform_delay(1); // Delay with 1 millisecond
             _recieve_delay_per_bit++;
         }
-        if (DEBUG) { platform_debug("Current delay", _recieve_delay_per_bit); }
+        //if (DEBUG) { platform_debug("Current delay", _recieve_delay_per_bit); }
+        printf("Current delay: %d\n", _recieve_delay_per_bit);
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
