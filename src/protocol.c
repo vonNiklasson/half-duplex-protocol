@@ -122,12 +122,15 @@ unsigned char hdp_recieve(void) {
     /* Calculate the avarage delay per bit */
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
+    printf("Delay per bit: %d\n", _recieve_delay_per_bit);
+    printf("Bitrate: %d\n", (1000/_recieve_delay_per_bit));
+
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit / 2);
     unsigned char test;
     for (i = 0; i < 10; i++) {
         test = _read_byte(0, _recieve_delay_per_bit);
-        printf("Byte %d: %d    %c" i, test, test);
+        printf("Byte %d: %d    %c\n", i, test, test);
     }
 
     /* Desetup the gpio & delay to low */
