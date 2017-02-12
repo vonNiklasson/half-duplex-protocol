@@ -45,14 +45,15 @@ int OUTPUT_PIN = 0; // BCM Input 17
 
 /* Setup gpio ports here */
 void platform_gpio_setup(void) {
-    wiringPiSetup();    
+    wiringPiSetup();
+    pinMode(INPUT_PIN, INPUT);
+    pinMode(OUTPUT_PIN, OUTPUT);
 }
 
 /* Define a gpio pre transfer here (will be called before transfer starts)
  * recieve: false=sending data, true=recieving data */
 void platform_gpio_pre_transfer(const bool recieve) {
-    pinMode(INPUT_PIN, INPUT);
-    pinMode(OUTPUT_PIN, OUTPUT);
+    return;
 }
 
 /* Define a gpio post transfer here (will be called after transfer is done)
