@@ -24,6 +24,6 @@ void platform_gpio_set_low(void);
 
 int platform_gpio_read(void);
 
-void platform_debug(char *str, char val);
+void platform_debug(char *str, int val);
 
 #endif

@@ -127,6 +127,9 @@ unsigned char hdp_recieve(void) {
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
     if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
 
+    _recieve_delay_per_bit = (1000/_recieve_delay_per_bit);
+    _recieve_delay_per_bit = 1000 / _recieve_delay_per_bit;
+
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
     platform_delay(_recieve_delay_per_bit / 2);
