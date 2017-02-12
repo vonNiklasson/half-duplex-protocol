@@ -116,7 +116,6 @@ unsigned char hdp_recieve(void) {
             _recieve_delay_per_bit++;
         }
         //if (DEBUG) { platform_debug("Current delay", _recieve_delay_per_bit); }
-        printf("Current delay: %d\n", _recieve_delay_per_bit);
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
@@ -279,6 +278,6 @@ int _read_increased_bit(const int delay) {
     /* Read next bit as normal */
     bit += platform_gpio_read();
     /* Subtract 1 from the bit */
-    if (DEBUG) { platform_debug("Bit set to ", bit); }
+    if (DEBUG) { platform_debug("Bit set to ", bit - 1); }
     return bit - 1;
 }
