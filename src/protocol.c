@@ -127,16 +127,17 @@ unsigned char hdp_recieve(void) {
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit / 2);
-    unsigned char test;
+    unsigned char val;
     for (i = 0; i < 10; i++) {
-        test = _read_byte(0, _recieve_delay_per_bit);
+        val = _read_byte(0, _recieve_delay_per_bit);
+        if (DEBUG) { platform_debug("Byte", val); }
     }
 
     /* Desetup the gpio & delay to low */
     platform_gpio_post_transfer(true);
     platform_delay_post_transfer(true);
 
-    return test;
+    return val;
 }
 
 
@@ -258,6 +259,8 @@ unsigned char _read_byte(const int predelay, const int delay) {
     int i;
     for (i = 7; i >= 0; i--) {
         r |= _read_increased_bit(delay) << i;
+        /* Wait further */
+        platform_delay(delay);
     }
     return r;
 }
