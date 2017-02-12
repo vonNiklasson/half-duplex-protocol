@@ -115,20 +115,18 @@ unsigned char hdp_recieve(void) {
             platform_delay(1); // Delay with 1 millisecond
             _recieve_delay_per_bit += 1;
         }
-        if (DEBUG) { platform_debug("Current delay", _recieve_delay_per_bit); }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
 
-    if (DEBUG) { platform_debug("Getting here 1", 0); }
     /* Calculate the avarage delay per bit */
+    if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED);
+    if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
 
-    if (DEBUG) { platform_debug("Getting here 2", _recieve_delay_per_bit / BITRATE_BITS_RESERVED); }
     /* Purposfully divide by 100 to force a rounding of the number */
-    _recieve_delay_per_bit = (100/_recieve_delay_per_bit);
-    if (DEBUG) { platform_debug("Getting here 3", _recieve_delay_per_bit); }
-    _recieve_delay_per_bit = 100 / _recieve_delay_per_bit;
+    _recieve_delay_per_bit = (100 /_recieve_delay_per_bit);
+    _recieve_delay_per_bit = (100 / _recieve_delay_per_bit);
 
     if (DEBUG) { platform_debug("Getting here 4", 0); }
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
