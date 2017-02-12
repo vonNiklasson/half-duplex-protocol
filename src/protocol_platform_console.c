@@ -2,11 +2,13 @@
  * Name: Johan Niklasson
  * Project: Half duplex protocol
  *
- * Source: src/protocol_platform.c
+ * Source: src/protocol_platform_console.c
  */
 
 #include <stdio.h>
 #include "protocol_platform.h"
+
+/******************** Delay functions below ********************/
 
 /* Define a delay setup here (will be called when protocol inits, may be more than once) */
 void platform_delay_setup() {
@@ -43,6 +45,8 @@ void platform_delay(int milliseconds) {
     }
 }
 
+
+/******************** GPIO functions below ********************/
 
 /* Setup gpio ports here */
 void platform_gpio_setup(void) {

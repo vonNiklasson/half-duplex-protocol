@@ -10,15 +10,15 @@
 
 int main(int argc, char *argv[])
 {
-    initialize();
+    hdp_initialize();
 
-    bitrate = 10;
-    data_set_byte(send_data, DATA_BYTES_RESERVED, 0, 'j');
-    data_set_byte(send_data, DATA_BYTES_RESERVED, 1, 'o');
-    data_set_byte(send_data, DATA_BYTES_RESERVED, 2, 'h');
-    data_set_byte(send_data, DATA_BYTES_RESERVED, 3, 'a');
-    data_set_byte(send_data, DATA_BYTES_RESERVED, 4, 'n');
-    transmit();
+    hdp_bitrate = 10;
+    hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 0, 'j');
+    hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 1, 'o');
+    hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 2, 'h');
+    hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 3, 'a');
+    hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 4, 'n');
+    hdp_transmit();
 
     return 0;
 }

@@ -42,35 +42,21 @@
 
 /******************** Program variables below ********************/
 
-/* Variables to be set by the caller */
-unsigned char send_data[DATA_BYTES_RESERVED];
-int bitrate;
-bool half_duplex;
-bool debug;
-
-unsigned char _settings[SETTINGS_BYTES_RESERVED];
-unsigned char _data_count[DATA_BYTES_COUNT_RESERVED];
+/* Variables to be set by the caller (may have functions to cover as well) */
+unsigned char hdp_send_data[DATA_BYTES_RESERVED];
+int hdp_bitrate;
+bool hdp_half_duplex;
+bool hdp_debug;
 
 /******************** Functions to be used by the caller below ********************/
 
-void initialize(void);
+void hdp_initialize(void);
 
-void transmit(void);
-int recieve(void);
+void hdp_transmit(void);
+int hdp_recieve(void);
 
-void data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit);
-void data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte);
-void data_clear(unsigned char *data, const int length);
+void hdp_data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit);
+void hdp_data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte);
+void hdp_data_clear(unsigned char *data, const int length);
 
 #endif
-
-/******************** Internal functions below ********************/
-
-int _count_bytes_in_use(const unsigned char *data, const int length);
-int _get_increased_bit(char bit, const int offset);
-void _transmit_to_gpio_with_increased_bit(const char bit, const int delay);
-void _transmit_to_gpio(const char bit, const int delay);
-
-int _divide_round_up(const int n, const int d);
-
-void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);

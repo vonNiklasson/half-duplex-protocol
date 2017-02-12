@@ -7,35 +7,50 @@
 
 #include "protocol.h"
 
+/******************** Internal functions declaration below ********************/
+
+unsigned char _settings[SETTINGS_BYTES_RESERVED];
+unsigned char _data_count[DATA_BYTES_COUNT_RESERVED];
+
+int _count_bytes_in_use(const unsigned char *data, const int length);
+int _get_increased_bit(char bit, const int offset);
+void _transmit_to_gpio_with_increased_bit(const char bit, const int delay);
+void _transmit_to_gpio(const char bit, const int delay);
+
+int _divide_round_up(const int n, const int d);
+
+void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
+
+
 /******************** Sending data functions ********************/
 
-void initialize(void) {
+void hdp_initialize(void) {
     platform_delay_setup();
     platform_gpio_setup();
 
     /* Clears the data */
-    data_clear(send_data, DATA_BYTES_RESERVED);
-    data_clear(_settings, SETTINGS_BYTES_RESERVED);
-    data_clear(_data_count, DATA_BYTES_COUNT_RESERVED);
+    hdp_data_clear(hdp_send_data, DATA_BYTES_RESERVED);
+    hdp_data_clear(_settings, SETTINGS_BYTES_RESERVED);
+    hdp_data_clear(_data_count, DATA_BYTES_COUNT_RESERVED);
 
     /* Sets the default values unless changed */
-    bitrate = DEFAULT_BITRATE;
-    half_duplex = DEFAULT_HALF_DUPLEX;
-    debug = DEFAULT_DEBUG;
+    hdp_bitrate = DEFAULT_BITRATE;
+    hdp_half_duplex = DEFAULT_HALF_DUPLEX;
+    hdp_debug = DEFAULT_DEBUG;
 }
 
-void transmit(void) {
+void hdp_transmit(void) {
     /* Setup the gpio & delay and pull gpio to low */
     platform_delay_pre_transfer(false);
     platform_gpio_pre_transfer(false);
     platform_gpio_set_low();
 
     /* Set the _data_count array to correct bits */
-    unsigned char byte_count = _count_bytes_in_use(send_data, DATA_BYTES_RESERVED);
-    data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
+    unsigned char byte_count = _count_bytes_in_use(hdp_send_data, DATA_BYTES_RESERVED);
+    hdp_data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
 
     /* Gets the delay per bit */
-    int delay_per_bit = (int)(1000.0 / (bitrate));
+    int delay_per_bit = (int)(1000.0 / (hdp_bitrate));
 
     /*** Starts transmitting below ***/
 
@@ -57,7 +72,7 @@ void transmit(void) {
     _transmit_bytes(&byte_count, 1, delay_per_bit);
 
     /* Send the data as increased bits */
-    _transmit_bytes(send_data, byte_count, delay_per_bit);
+    _transmit_bytes(hdp_send_data, byte_count, delay_per_bit);
 
     /* Sets the gpio to low after transmit */
     platform_gpio_set_low();
@@ -65,9 +80,14 @@ void transmit(void) {
     platform_delay_post_transfer(false);
 }
 
+int hdp_recieve(void) {
+    return 0;
+}
+
+
 /******************** Modifying data array ********************/
 
-void data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit) {
+void hdp_data_set_bit(unsigned char *data, const int length, const int bit_position, const int bit) {
     int bit_pos = bit_position;
     int byte_pos = 0;
 
@@ -91,7 +111,7 @@ void data_set_bit(unsigned char *data, const int length, const int bit_position,
     }
 }
 
-void data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte) {
+void hdp_data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte) {
     /* Om positionen för byte är större än vad som ryms, avbryt */
     if (byte_position >= length) {
         return;
@@ -115,7 +135,7 @@ void data_fill_from_position(const int start_position, const int data) {
 }
 */
 
-void data_clear(unsigned char *data, const int length) {
+void hdp_data_clear(unsigned char *data, const int length) {
     int i;
     for (i = 0; i < length; i++) {
         *(data + i) = 0;
