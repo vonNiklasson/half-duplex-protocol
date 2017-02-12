@@ -109,12 +109,14 @@ unsigned char hdp_recieve(void) {
     /* Wait for the first bit before entering the loop to determine the bitrate */
     while (platform_gpio_read() == 0);
 
+    if (DEBUG) { platform_debug("Have it!", 0); }
     for (i = 0; i < BITRATE_BITS_RESERVED; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
             platform_delay(1); // Delay with 1 millisecond
             _recieve_delay_per_bit += 1;
         }
+        if (DEBUG) { platform_debug("Iteration", i); }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
