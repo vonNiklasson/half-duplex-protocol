@@ -84,5 +84,5 @@ int platform_gpio_read(void) {
 
 /* Setup eventual function to debug */
 void platform_debug(char *str, char val) {
-    printf("%s: %d\t %c\n", *str, val, val);
+    printf("%s: %d\t %c\n", str, val, val);
 }
