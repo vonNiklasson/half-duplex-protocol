@@ -128,7 +128,9 @@ unsigned char hdp_recieve(void) {
 
     /* Purposfully divide by 100 to force a rounding of the number */
     _recieve_delay_per_bit = (100 /_recieve_delay_per_bit);
+    printf("%f\n", _recieve_delay_per_bit);
     _recieve_delay_per_bit = (100 / _recieve_delay_per_bit);
+    printf("%f\n", _recieve_delay_per_bit);
 
     if (DEBUG) { platform_debug("Getting here 4", 0); }
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
