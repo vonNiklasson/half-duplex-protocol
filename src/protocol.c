@@ -110,29 +110,26 @@ unsigned char hdp_recieve(void) {
     /* Wait for the first bit before entering the loop to determine the bitrate */
     while (platform_gpio_read() == 0);
 
-    if (DEBUG) { platform_debug("Have it!", 0); }
     for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
             platform_delay(10); // Delay with 1 millisecond
             _recieve_delay_per_bit += 10;
         }
-        if (DEBUG) { platform_debug("Iteration", i); }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
 
     /* Calculate the avarage delay per bit */
-    if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
+
+    if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
     if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
 
-    temp_delay = (100 /_recieve_delay_per_bit);
-    /* Purposfully divide by 100 to force a rounding of the number */
+    temp_delay = (100 / (float)_recieve_delay_per_bit);
+
     _recieve_delay_per_bit = temp_delay;
-    printf("%d\n", _recieve_delay_per_bit);
     _recieve_delay_per_bit = (100 / _recieve_delay_per_bit);
-    printf("%d\n", _recieve_delay_per_bit);
 
     if (DEBUG) { platform_debug("Getting here 4", 0); }
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
