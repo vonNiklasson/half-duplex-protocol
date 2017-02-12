@@ -5,8 +5,9 @@
  * Source: src/protocol_platform_wiringpi.c
  */
 
-#include "protocol_platform.h"
+#include <stdio.h>
 #include <wiringPi.h>
+#include "protocol_platform.h"
 
 /******************** Delay functions below ********************/
 
