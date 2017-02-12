@@ -26,14 +26,14 @@ void platform_delay_post_transfer(bool recieve) {
 }
 
 /* Define a delay here */
-void platform_delay(int microseconds) {
+void platform_delay(int milliseconds) {
     /* Dummy function here */
     int i, j, k;
-    for(i = 0; i < microseconds; i++)
+    for(i = 0; i < milliseconds; i++)
     {
-        for(j = 0; j < 8; j++)
+        for(j = 0; j < 800; j++)
         {
-            for(k = 0; k < 60; k++)
+            for(k = 0; k < 635; k++)
             {
                // waste function, volatile makes sure it is not being optimized out by compiler
                 int volatile t = 120 * j * i + k;

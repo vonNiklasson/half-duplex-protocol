@@ -35,46 +35,29 @@ void transmit(void) {
     data_set_byte(_data_count, DATA_BYTES_COUNT_RESERVED, 0, byte_count);
 
     /* Gets the delay per bit */
-    int delay_per_bit = (int)(1000000.0 / (bitrate));
+    int delay_per_bit = (int)(1000.0 / (bitrate));
 
     /*** Starts transmitting below ***/
 
     /* Starts the bitrate initialization */
     int i;
-    int j;
-    char bit;
 
     for (i = 0; i < BITRATE_BITS_RESERVED; i++) {
         if (i % 2 == 0) {
-            _set_gpio(1, delay_per_bit);
+            _transmit_to_gpio(1, delay_per_bit);
         } else {
-            _set_gpio(0, delay_per_bit);
+            _transmit_to_gpio(0, delay_per_bit);
         }
     }
 
     /* Send the settings as increased bits */
-    for (i = 0; i < SETTINGS_BYTES_RESERVED; i++) {
-        for (j = 7; j >= 0; j--) {
-            bit = (_settings[i] >> j) & 1;
-            _set_gpio_with_increased_bit(bit, delay_per_bit);
-        }
-    }
+    _transmit_bytes(_settings, SETTINGS_BYTES_RESERVED, delay_per_bit);
 
     /* Send the number as increased bits of bytes that will be sent in the next step */
-    for (i = 0; i < DATA_BYTES_COUNT_RESERVED; i++) {
-        for (j = 7; j >= 0; j--) {
-            bit = (byte_count >> j) & 1;
-            _set_gpio_with_increased_bit(bit, delay_per_bit);
-        }
-    }
+    _transmit_bytes(&byte_count, 1, delay_per_bit);
 
     /* Send the data as increased bits */
-    for (i = 0; i < byte_count; i++) {
-        for (j = 7; j >= 0; j--) {
-            bit = (send_data[i] >> j) & 1;
-            _set_gpio_with_increased_bit(bit, delay_per_bit);
-        }
-    }
+    _transmit_bytes(send_data, byte_count, delay_per_bit);
 
     /* Sets the gpio to low after transmit */
     platform_gpio_set_low();
@@ -160,7 +143,7 @@ int _get_increased_bit(char bit, const int offset) {
     return (bit >> offset) & 1;
 }
 
-void _set_gpio(const char bit, const int delay) {
+void _transmit_to_gpio(const char bit, const int delay) {
     if (bit == 1) {
         platform_gpio_set_high();
     } else {
@@ -169,14 +152,25 @@ void _set_gpio(const char bit, const int delay) {
     platform_delay(delay);
 }
 
-void _set_gpio_with_increased_bit(const char bit, const int delay) {
+void _transmit_to_gpio_with_increased_bit(const char bit, const int delay) {
     char offset_bit;
     offset_bit = _get_increased_bit(bit, 1);
-    _set_gpio(offset_bit, delay);
+    _transmit_to_gpio(offset_bit, delay);
     offset_bit = _get_increased_bit(bit, 0);
-    _set_gpio(offset_bit, delay);
+    _transmit_to_gpio(offset_bit, delay);
 }
 
 int _divide_round_up(const int n, const int d) {
     return (n + (d - 1)) / d;
+}
+
+void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit) {
+    char bit;
+    int i, j;
+    for (i = 0; i < length; i++) {
+        for (j = 7; j >= 0; j--) {
+            bit = (data[i] >> j) & 1;
+            _transmit_to_gpio_with_increased_bit(bit, delay_per_bit);
+        }
+    }
 }

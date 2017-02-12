@@ -13,7 +13,7 @@
 void platform_delay_setup();
 void platform_delay_pre_transfer(bool recieve);
 void platform_delay_post_transfer(bool recieve);
-void platform_delay(int microseconds);
+void platform_delay(int milliseconds);
 
 void platform_gpio_setup(void);
 void platform_gpio_pre_transfer(bool recieve);
