@@ -115,6 +115,7 @@ unsigned char hdp_recieve(void) {
             platform_delay(1); // Delay with 1 millisecond
             _recieve_delay_per_bit++;
         }
+        if (DEBUG) { platform_debug("Current delay", _recieve_delay_per_bit); }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
@@ -123,13 +124,13 @@ unsigned char hdp_recieve(void) {
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
     if (DEBUG) { platform_debug("Delay per bit", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("Delay per bit", (1000/_recieve_delay_per_bit)); }
+    if (DEBUG) { platform_debug("Bitrate", (1000/_recieve_delay_per_bit)); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
     platform_delay(_recieve_delay_per_bit / 2);
     unsigned char val;
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 7; i++) {
         val = _read_byte(0, _recieve_delay_per_bit);
         if (DEBUG) { platform_debug("Byte", val); }
     }
