@@ -103,6 +103,7 @@ unsigned char hdp_recieve(void) {
     platform_gpio_pre_transfer(true);
 
     /* Resets the delay per bit */
+    float temp_delay = 0;
     _recieve_delay_per_bit = 0;
 
     /* Sets local variables to determine the bitrate */
@@ -117,22 +118,26 @@ unsigned char hdp_recieve(void) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
             platform_delay(1); // Delay with 2 milliseconds
-            _recieve_delay_per_bit += 1;
+            temp_delay += 1;
         }
         /* Inverts the bit */
         bitrate_previous_bit = !bitrate_previous_bit;
     }
 
     /* Calculate the avarage delay per bit */
-    if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
+    if (DEBUG) { platform_debug("Total delay", temp_delay); }
 
-    _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
+    temp_delay = temp_delay / (BITRATE_BITS_RESERVED - 1);
 
-    if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
-    int assumed_bitrate = hdp_get_nearest_bitrate(1000 / _recieve_delay_per_bit);
-    int assumed_delay = hdp_get_nearest_delay(_recieve_delay_per_bit);
+    if (DEBUG) { platform_debug("Avarage delay", temp_delay); }
+
+    int assumed_bitrate = hdp_get_nearest_bitrate(1000 / temp_delay);
+    int assumed_delay = hdp_get_nearest_delay(temp_delay);
+
     if (DEBUG) { platform_debug("Assumed bitrate", assumed_bitrate); }
     if (DEBUG) { platform_debug("Assumed delay", assumed_delay); }
+
+    _recieve_delay_per_bit = assumed_delay;
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
@@ -228,7 +233,7 @@ void hdp_data_clear(unsigned char *data, const int length) {
 }
 
 /* Gets the closest bitrate from input bitrate */
-int hdp_get_nearest_bitrate(const int bitrate) {
+int hdp_get_nearest_bitrate(const float bitrate) {
     int tempDistance = _abs(_bitrates[0] - bitrate);
     int newDistance;
     int idx = 0;
@@ -246,8 +251,8 @@ int hdp_get_nearest_bitrate(const int bitrate) {
 }
 
 /* Gets the closest delay from accepted bitrate */
-int hdp_get_nearest_delay(const int delay) {
-    return (1000 / hdp_get_nearest_bitrate(delay));
+int hdp_get_nearest_delay(const float delay) {
+    return (int)(1000.0 / hdp_get_nearest_bitrate(delay));
 }
 
 /* Return the absolute value */

@@ -62,7 +62,7 @@ void hdp_data_set_bit(unsigned char *data, const int length, const int bit_posit
 void hdp_data_set_byte(unsigned char *data, const int length, const int byte_position, const int byte);
 void hdp_data_clear(unsigned char *data, const int length);
 
-int hdp_get_nearest_bitrate(const int bitrate);
-int hdp_get_nearest_delay(const int delay);
+int hdp_get_nearest_bitrate(const float bitrate);
+int hdp_get_nearest_delay(const float delay);
 
 #endif
