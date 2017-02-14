@@ -6,11 +6,12 @@
  */
 
 #include "protocol_platform.h"
+#include "protocol.h"
 #include <pic32mx.h>
 
 /******************** Delay functions below ********************/
 
-#define TMR2PERIOD ((80000000 / 64) / 1000)
+#define TMR2PERIOD ((80000000 / 64) / BITRATE_BASE)
 #if TMR2PERIOD > 0xffff
 #error "Timer period is too big."
 #endif

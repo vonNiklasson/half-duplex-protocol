@@ -15,6 +15,10 @@
 
 /******************** Version specific values below ********************/
 
+/* What 1 second is based on
+ * (Milliseconds = 1 000, Microseconds = 1 000 000 etc) */
+#define BITRATE_BASE 1000
+
 /* Version of the protocol */
 #define PROTOCOL_VERSION "0.1"
 
