@@ -30,7 +30,7 @@ void platform_delay_post_transfer(const bool recieve) {
 
 /* Define a delay here */
 void platform_delay(const int milliseconds) {
-    delay(milliseconds);
+    usleep(milliseconds * 1000);
     return;
 }
 
