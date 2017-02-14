@@ -10,7 +10,7 @@
 /******************** Internal functions declaration below ********************/
 
 /* List of valid bitrates */
-int _hdp_bitrates[16] = { 1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000 };
+int _bitrates[16] = { 1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000 };
 
 /* Variables for sending */
 unsigned char _send_settings[SETTINGS_BYTES_RESERVED];
@@ -26,6 +26,7 @@ int _get_increased_bit(unsigned char bit, const int offset);
 void _transmit_to_gpio_with_increased_bit(const unsigned char bit, const int delay);
 void _transmit_to_gpio(const unsigned char bit, const int delay);
 
+int _abs(int number);
 int _divide_round_up(const int n, const int d);
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
@@ -127,12 +128,9 @@ unsigned char hdp_recieve(void) {
 
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
 
-    /* Divide by 1000 and back again to round the value */
-    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
-    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
-
     if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
-    if (DEBUG) { platform_debug("Bitrate", (1000 / _recieve_delay_per_bit)); }
+    int assumed_bitrate = hdp_get_nearest_bitrate(_recieve_delay_per_bit);
+    if (DEBUG) { platform_debug("Bitrate", assumed_bitrate); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
@@ -225,6 +223,30 @@ void hdp_data_clear(unsigned char *data, const int length) {
     for (i = 0; i < length; i++) {
         *(data + i) = 0;
     }
+}
+
+/* Gets the closest bitrate from input bitrate */
+int hdp_get_nearest_bitrate(const int bitrate) {
+    int tempDistance = _abs(_bitrates[0] - bitrate);
+    int newDistance;
+    int idx = 0;
+    int i;
+    for(i = 1; i < sizeof(_bitrates)/sizeof(_bitrates[0]); i++){
+        newDistance = _abs(_bitrates[i] - bitrate);
+        if(newDistance < tempDistance){
+            idx = i;
+            tempDistance = newDistance;
+        }
+    }
+    int theNumber = _bitrates[idx];
+
+    return theNumber;
+}
+
+/* Return the absolute value */
+int _abs(int number) {
+    int const mask = number >> ((sizeof(int) * 8) - 1);
+    return (number + mask) ^ mask;
 }
 
 

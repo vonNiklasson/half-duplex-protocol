@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     hdp_initialize();
 
     if (transmit) {
-        hdp_bitrate = 10;
+        hdp_bitrate = hdp_get_nearest_bitrate(500);
 
         hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 0, 'j');
         hdp_data_set_byte(hdp_send_data, DATA_BYTES_RESERVED, 1, 'o');
