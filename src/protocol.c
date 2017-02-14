@@ -127,6 +127,10 @@ unsigned char hdp_recieve(void) {
     if (DEBUG) { platform_debug("Total delay", _recieve_delay_per_bit); }
 
     _recieve_delay_per_bit = _recieve_delay_per_bit / (BITRATE_BITS_RESERVED - 1);
+    
+    /* Divide by 1000 and back again to round the value */
+    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
+    _recieve_delay_per_bit = (1000 / _recieve_delay_per_bit);
 
     if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
     int assumed_bitrate = hdp_get_nearest_bitrate(_recieve_delay_per_bit);
