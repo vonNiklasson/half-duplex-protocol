@@ -9,6 +9,9 @@
 
 /******************** Internal functions declaration below ********************/
 
+/* List of valid bitrates */
+int _hdp_bitrates[16] = { 1, 2, 4, 5, 8, 10, 20, 25, 40, 50, 100, 125, 200, 250, 500, 1000 };
+
 /* Variables for sending */
 unsigned char _send_settings[SETTINGS_BYTES_RESERVED];
 unsigned char _send_data_count[DATA_BYTES_COUNT_RESERVED];
