@@ -130,7 +130,9 @@ unsigned char hdp_recieve(void) {
 
     if (DEBUG) { platform_debug("Avarage delay", _recieve_delay_per_bit); }
     int assumed_bitrate = hdp_get_nearest_bitrate(1000 / _recieve_delay_per_bit);
+    int assumed_delay = hdp_get_nearest_delay(_recieve_delay_per_bit);
     if (DEBUG) { platform_debug("Assumed bitrate", assumed_bitrate); }
+    if (DEBUG) { platform_debug("Assumed delay", assumed_delay); }
 
     /* Start reading bits from the transmitted data  below */
     platform_delay(_recieve_delay_per_bit);
@@ -241,6 +243,11 @@ int hdp_get_nearest_bitrate(const int bitrate) {
     int theNumber = _bitrates[idx];
 
     return theNumber;
+}
+
+/* Gets the closest delay from accepted bitrate */
+int hdp_get_nearest_delay(const int delay) {
+    return (1000 / hdp_get_nearest_bitrate(delay));
 }
 
 /* Return the absolute value */
