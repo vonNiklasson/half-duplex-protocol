@@ -53,6 +53,19 @@ void platform_delay(const int milliseconds) {
     return;
 }
 
+/* Define a delay here that also check for state change on the gpio input port */
+void platform_delay_or_gpio_change(const int milliseconds) {
+    int initial_state = platform_gpio_read();
+    int i;
+    for (i = 0; i < milliseconds; i++) {
+        platform_delay(1);
+        if (initial_state != platform_gpio_read()) {
+            return;
+        }
+    }
+    return;
+}
+
 
 /******************** GPIO functions below ********************/
 
@@ -79,7 +92,7 @@ void platform_gpio_post_transfer(const bool recieve) {
 }
 
 /* Doesn't need modification */
-void platform_gpio_set(int state) {
+void platform_gpio_set(const int state) {
     if (state) {
         platform_gpio_set_high();
     } else {
