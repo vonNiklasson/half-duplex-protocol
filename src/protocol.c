@@ -112,7 +112,7 @@ unsigned char hdp_recieve(void) {
     for (i = 0; i < BITRATE_BITS_RESERVED - 1; i++) {
         /* Wait for the bit to change (or enter immediately if it's the first bit) */
         while (platform_gpio_read() != bitrate_previous_bit) {
-            platform_delay(5); // Delay with 1 millisecond
+            platform_delay(5); // Delay with 5 milliseconds
             _recieve_delay_per_bit += 5;
         }
         /* Inverts the bit */
@@ -283,7 +283,7 @@ unsigned char _read_byte(const int delay) {
     for (i = 7; i >= 0; i--) {
         r |= _read_increased_bit(delay) << i;
         /* Wait further */
-        platform_delay(delay);
+        platform_delay_or_gpio_change(delay);
     }
     return r;
 }
@@ -292,7 +292,7 @@ int _read_increased_bit(const int delay) {
     int bit = 0;
     /* Read first bit, but multiply by 2 */
     bit += (platform_gpio_read() << 1);
-    platform_delay(delay);
+    platform_delay_or_gpio_change(delay);
     /* Read next bit as normal */
     bit += platform_gpio_read();
     /* Subtract 1 from the bit */
