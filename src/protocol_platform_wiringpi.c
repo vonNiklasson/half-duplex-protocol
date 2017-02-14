@@ -5,7 +5,6 @@
  * Source: src/protocol_platform_wiringpi.c
  */
 
-#include <unistd.h>
 #include <stdio.h>
 #include <wiringPi.h>
 #include "protocol_platform.h"
@@ -31,7 +30,7 @@ void platform_delay_post_transfer(const bool recieve) {
 
 /* Define a delay here */
 void platform_delay(const int milliseconds) {
-    usleep(milliseconds * 1000);
+    delay(milliseconds);
     return;
 }
 
