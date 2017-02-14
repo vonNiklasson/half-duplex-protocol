@@ -30,9 +30,9 @@ hdp_transmit();
 
 You can also modify `hdp_send_data` directly or use `hdp_data_set_bit` where you can set bits through the entire transmit data. e.g.
 ```c
-/* Set bit index 43 (from left) to 1. 
- * Also bit no 5 (from least significatnt bit) in byte no 5 */
-hdp_data_set_bit(hdp_send_data, DATA_BYTES_RESERVED, 43, 1);
+/* Set bit index 12 (from left) to 1. 
+ * 00000000|00001000|000000... */
+hdp_data_set_bit(hdp_send_data, DATA_BYTES_RESERVED, 12, 1);
 ```
 
 ### Recieve data
