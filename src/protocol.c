@@ -131,7 +131,7 @@ unsigned char hdp_recieve(void) {
 
     if (DEBUG) { platform_debug("Avarage delay", temp_delay); }
 
-    int assumed_bitrate = hdp_get_nearest_bitrate(1000 / temp_delay);
+    int assumed_bitrate = hdp_get_nearest_bitrate(1000.0 / temp_delay);
     int assumed_delay = hdp_get_nearest_delay(temp_delay);
 
     if (DEBUG) { platform_debug("Assumed bitrate", assumed_bitrate); }
@@ -252,7 +252,7 @@ int hdp_get_nearest_bitrate(const float bitrate) {
 
 /* Gets the closest delay from accepted bitrate */
 int hdp_get_nearest_delay(const float delay) {
-    return (int)(1000.0 / hdp_get_nearest_bitrate(delay));
+    return (int)hdp_get_nearest_bitrate(delay);
 }
 
 /* Return the absolute value */
