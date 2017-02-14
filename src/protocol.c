@@ -22,11 +22,11 @@ unsigned char _recieve_settings[SETTINGS_BYTES_RESERVED];
 unsigned char _recieve_data_count[DATA_BYTES_COUNT_RESERVED];
 
 int _count_bytes_in_use(const unsigned char *data, const int length);
+int _abs(int number);
 int _get_increased_bit(unsigned char bit, const int offset);
 void _transmit_to_gpio_with_increased_bit(const unsigned char bit, const int delay);
 void _transmit_to_gpio(const unsigned char bit, const int delay);
 
-int _abs(int number);
 int _divide_round_up(const int n, const int d);
 
 void _transmit_bytes(const unsigned char *data, const int length, const int delay_per_bit);
@@ -210,21 +210,6 @@ void hdp_data_set_byte(unsigned char *data, const int length, const int byte_pos
     data[byte_position] = byte;
 }
 
-/* Perhaps fix later, not very important right now
-void data_fill_from_position(const int start_position, const int data) {
-    if (byte_position >= DATA_BYTES_RESERVED) {
-        return;
-    }
-
-    int base_bit_pos = byte_position * 8;
-
-    int i;
-    for (i = 0; i < 8; i++) {
-
-    }
-}
-*/
-
 void hdp_data_clear(unsigned char *data, const int length) {
     int i;
     for (i = 0; i < length; i++) {
@@ -255,12 +240,6 @@ int hdp_get_nearest_delay(const float delay) {
     return (int)hdp_get_nearest_bitrate(delay);
 }
 
-/* Return the absolute value */
-int _abs(int number) {
-    int const mask = number >> ((sizeof(int) * 8) - 1);
-    return (number + mask) ^ mask;
-}
-
 
 /******************** Internal functions below ********************/
 
@@ -273,6 +252,12 @@ int _count_bytes_in_use(const unsigned char *data, const int length) {
         }
     }
     return 0;
+}
+
+/* Return the absolute value */
+int _abs(int number) {
+    int const mask = number >> ((sizeof(int) * 8) - 1);
+    return (number + mask) ^ mask;
 }
 
 /* Takes one bit (or byte) and increases it with 1 and
