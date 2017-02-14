@@ -5,6 +5,7 @@
  * Source: src/protocol_platform_wiringpi.c
  */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <wiringPi.h>
 #include "protocol_platform.h"
