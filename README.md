@@ -1,5 +1,5 @@
 # half-duplex-protocol
-A low level communication protocol, using a one GPIO for sending data, and an GPIO for receiving data.
+A low level communication protocol, using a single GPIO for sending data, and the same GPIO for receiving data.
 
 ## Bitrate/Frequency
 At the current state the protocol can only read 500hz to 1MHz (depending on how precise the timers on the device can be). This is because the program uses milliseconds as base time. May be upgraded in the future.
